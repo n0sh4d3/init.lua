@@ -321,10 +321,10 @@ require("lazy").setup({
 	},
 
 	{
-		"nyoom-engineering/oxocarbon.nvim",
+		"rose-pine/neovim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("oxocarbon")
+			vim.cmd.colorscheme("rose-pine")
 
 			-- You can cofigure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
@@ -399,12 +399,25 @@ vim.keymap.set("i", "<C-h>", function()
 	vim.lsp.buf.signature_help()
 end, opts)
 function ColorMyPencils(color)
-	color = color or "oxocarbon"
+	color = color or "rose-pine"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
+
+require("rose-pine").setup({
+	variant = "moon", -- auto, main, moon, or dawn
+	dark_variant = "moon", -- main, moon, or dawn
+	dim_inactive_windows = false,
+	extend_background_behind_borders = true,
+
+	styles = {
+		bold = true,
+		italic = false,
+		transparency = true,
+	},
+})
 
 ColorMyPencils()
 local mark = require("harpoon.mark")
@@ -430,3 +443,15 @@ end)
 vim.opt.termguicolors = true
 
 require("nvim-highlight-colors").setup({})
+
+vim.api.nvim_set_keymap(
+	"i",
+	"<leader>jj",
+	[[<Esc>:lua << EOF
+vim.api.nvim_put({ 'if err != nil {' }, 'l', true, true)
+vim.api.nvim_put({ '    return err' }, 'l', true, true)
+vim.api.nvim_put({ '}' }, 'l', true, true)
+vim.api.nvim_feedkeys('a', 'n', true)
+EOF<CR>]],
+	{ noremap = true }
+)
