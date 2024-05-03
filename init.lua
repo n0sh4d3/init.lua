@@ -55,6 +55,7 @@ require("lazy").setup({
 	"brenoprata10/nvim-highlight-colors",
 	"ThePrimeagen/harpoon",
 	"jiangmiao/auto-pairs",
+	{ "wakatime/vim-wakatime", lazy = false },
 	{
 		"ray-x/go.nvim",
 		dependencies = { -- optional packages
@@ -340,9 +341,6 @@ require("lazy").setup({
 		priority = 1000,
 		init = function()
 			vim.cmd.colorscheme("rose-pine")
-
-			-- You can cofigure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
 		end,
 	},
 
@@ -372,25 +370,7 @@ require("lazy").setup({
 	},
 
 	{ import = "after.plugins" },
-}, {
-	ui = {
-		icons = vim.g.have_nerd_font and {} or {
-			cmd = "⌘",
-			config = "🛠",
-			event = "📅",
-			ft = "📂",
-			init = "⚙",
-			keys = "🗝",
-			plugin = "🔌",
-			runtime = "💻",
-			require = "🌙",
-			source = "📄",
-			start = "🚀",
-			task = "📌",
-			lazy = "💤 ",
-		},
-	},
-})
+}, {})
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
@@ -433,7 +413,6 @@ require("rose-pine").setup({
 		transparency = true,
 	},
 })
-
 ColorMyPencils()
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
@@ -461,4 +440,5 @@ require("nvim-highlight-colors").setup({})
 
 vim.keymap.set("n", "<leader>e", ":GoIfErr<CR>")
 vim.keymap.set("n", "<leader>po", ":GoPkgOutline<CR>")
-vim.keymap.set("n", "<leader>t", ":GoAddAllTest")
+vim.keymap.set("n", "<leader>t", ":GoAddAllTest<CR>")
+vim.keymap.set("n", "<leader>l", ":GoListImports<CR>")
