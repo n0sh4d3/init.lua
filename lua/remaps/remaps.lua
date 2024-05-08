@@ -25,8 +25,6 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 
@@ -42,14 +40,11 @@ vim.keymap.set("n", "<leader><CR>", ":!python3 %<CR>")
 
 vim.keymap.set("n", "<A-h>", ":ToggleTerm size=10 direction=horizontal<CR>")
 vim.keymap.set("t", "<A-h>", "exit<CR>")
-vim.keymap.set("n", "<A-i>", ":ToggleTerm size=10 direction=float<CR>")
-vim.keymap.set("t", "<A-i>", "exit<CR>")
 vim.keymap.set("n", "<leader>fo", ":Telescope oldfiles<CR>")
 vim.keymap.set("n", "<leader>gs", ":Telescope git_status<CR>")
 vim.keymap.set("n", "<leader>gc", ":Telescope git_commits<CR>")
 vim.keymap.set("n", "<leader>ch", ":Telescope keymaps<CR>")
 vim.keymap.set("n", "<leader>k", ":Telescope buffers<CR>")
-vim.keymap.set("n", "<leader>l", ":Telescope live_grep<CR>")
 vim.keymap.set("n", "<C-h>", ":bprev<CR>")
 vim.keymap.set("n", "<C-l>", ":bnext<CR>")
 vim.keymap.set("n", "<C-x>", ":bd<CR>")

@@ -30,32 +30,8 @@ return {
 
             local builtin = require("telescope.builtin")
             vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "[S]earch [F]iles" })
-            vim.keymap.set("n", "<leader>gd", function()
-                vim.lsp.buf.definition()
-            end, opts)
-            vim.keymap.set("n", "<leader>hr", function()
-                vim.lsp.buf.hover()
-            end, opts)
-            vim.keymap.set("n", "<leader>ws", function()
-                vim.lsp.buf.workspace_symbol()
-            end, opts)
-            vim.keymap.set("n", "<leader>vd", function()
-                vim.diagnostic.open_float()
-            end, opts)
-            vim.keymap.set("n", "[d", function()
-                vim.diagnostic.goto_next()
-            end, opts)
-            vim.keymap.set("n", "]d", function()
-                vim.diagnostic.goto_prev()
-            end, opts)
             vim.keymap.set("n", "<leader>ca", function()
                 vim.lsp.buf.code_action()
-            end, opts)
-            vim.keymap.set("n", "<leader>sr", function()
-                vim.lsp.buf.references()
-            end, opts)
-            vim.keymap.set("n", "<leader>rn", function()
-                vim.lsp.buf.rename()
             end, opts)
 
             vim.keymap.set("n", "<leader>/", function()
@@ -65,12 +41,12 @@ return {
                 }))
             end, { desc = "[/] Fuzzily search in current buffer" })
 
-            vim.keymap.set("n", "<leader>s/", function()
+            vim.keymap.set("n", "<leader>l", function()
                 builtin.live_grep({
                     grep_open_files = true,
                     prompt_title = "Live Grep in Open Files",
                 })
-            end, { desc = "[S]earch [/] in Open Files" })
+            end, { desc = "[L]ive Grep in Open Files" })
         end,
     },
 
