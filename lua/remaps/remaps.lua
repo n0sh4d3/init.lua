@@ -29,10 +29,6 @@ vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("i", "<C-h>", function()
-    vim.lsp.buf.signature_help()
-end, opts)
-
 
 
 vim.keymap.set("n", "<leader>e", ":GoIfErr<CR>")
@@ -40,7 +36,6 @@ vim.keymap.set("n", "<leader>p", ":GoPkgOutline<CR>")
 vim.keymap.set("n", "<leader>t", ":GoAddAllTest<CR>")
 vim.keymap.set("n", "<leader>l", ":GoListImports<CR>")
 
---vim.api.nvim_set_keymap("n", "<leader>j", ":Lexplore<CR> :vertical resize 30<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>j", ":NvimTreeToggle<CR> :vertical resize 30<CR>", { noremap = true })
 
 vim.keymap.set("n", "<leader><CR>", ":!python3 %<CR>")

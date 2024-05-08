@@ -30,7 +30,7 @@ return {
 
             local builtin = require("telescope.builtin")
             vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "[S]earch [F]iles" })
-            vim.keymap.set("n", "gd", function()
+            vim.keymap.set("n", "<leader>gd", function()
                 vim.lsp.buf.definition()
             end, opts)
             vim.keymap.set("n", "<leader>hr", function()
@@ -57,9 +57,6 @@ return {
             vim.keymap.set("n", "<leader>rn", function()
                 vim.lsp.buf.rename()
             end, opts)
-            vim.keymap.set("i", "<C-h>", function()
-                vim.lsp.buf.signature_help()
-            end, opts)
 
             vim.keymap.set("n", "<leader>/", function()
                 builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -74,10 +71,6 @@ return {
                     prompt_title = "Live Grep in Open Files",
                 })
             end, { desc = "[S]earch [/] in Open Files" })
-
-            vim.keymap.set("n", "<leader>sn", function()
-                builtin.find_files({ cwd = vim.fn.stdpath("config") })
-            end, { desc = "[S]earch [N]eovim files" })
         end,
     },
 

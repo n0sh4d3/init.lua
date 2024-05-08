@@ -35,7 +35,7 @@ return {
 
                     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-                    map("K", vim.lsp.buf.hover, "Hover Documentation")
+                    map("<leader>hr", vim.lsp.buf.hover, "Hover Documentation")
 
                     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
@@ -73,7 +73,7 @@ return {
 
             local ensure_installed = vim.tbl_keys(servers or {})
             vim.list_extend(ensure_installed, {
-                "stylua",
+                "stylua", "gopls"
             })
             require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
