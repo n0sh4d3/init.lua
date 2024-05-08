@@ -17,7 +17,7 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
-vim.opt.tabstop = 8
+vim.opt.tabstop = 4
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
