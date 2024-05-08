@@ -29,6 +29,7 @@ vim.keymap.set("n", "<C-s>", function()
     ui.nav_file(4)
 end)
 
+require("bufferline").setup {}
 require("remaps.remaps")
 require("settings")
 require('gitsigns').setup()
