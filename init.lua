@@ -33,3 +33,14 @@ require("remaps.remaps")
 require("settings")
 require('gitsigns').setup()
 require("nvim-highlight-colors").setup({})
+require("nvim-tree").setup({
+    sort = {
+        sorter = "case_sensitive",
+    },
+    view = {
+        width = 30,
+    },
+    renderer = {
+        group_empty = true,
+    },
+})
