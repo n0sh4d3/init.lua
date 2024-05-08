@@ -60,7 +60,6 @@ return {
             vim.keymap.set("i", "<C-h>", function()
                 vim.lsp.buf.signature_help()
             end, opts)
-            vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
             vim.keymap.set("n", "<leader>/", function()
                 builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
