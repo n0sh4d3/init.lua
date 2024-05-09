@@ -9,7 +9,7 @@ end
 return {
     {
         "catppuccin/nvim",
-        lazy = true,
+        event = "VeryLazy",
         init = function()
             vim.cmd.colorscheme("catppuccin")
         end,

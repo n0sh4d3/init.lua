@@ -2,7 +2,7 @@ return {
 
     {
         "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
+        event = "BufRead",
         build = ":TSUpdate",
         opts = {
             ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
