@@ -50,5 +50,5 @@ vim.keymap.set("n", "<C-h>", ":bprev<CR>")
 vim.keymap.set("n", "<C-l>", ":bnext<CR>")
 
 -- close current buffer
-vim.keymap.set("n", "<C-x>", ":bd<CR>")
+vim.keymap.set("n", "<A-x>", ":bd<CR>")
 vim.keymap.set("n", "<S-x>", ":BufferLineCloseOthers<CR>")
