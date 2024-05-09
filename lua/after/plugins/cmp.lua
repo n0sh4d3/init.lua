@@ -1,7 +1,7 @@
 return {
     {
         "hrsh7th/nvim-cmp",
-        event = "BufReadPost",
+        event = "InsertEnter",
         dependencies = {
             {
                 "L3MON4D3/LuaSnip",
@@ -38,6 +38,10 @@ return {
                     end,
                 },
                 completion = { completeopt = "menu,menuone,noinsert" },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered()
+                },
 
                 mapping = cmp.mapping.preset.insert({
                     ["<C-n>"] = cmp.mapping.select_next_item(),
