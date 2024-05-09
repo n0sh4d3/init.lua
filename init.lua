@@ -11,3 +11,4 @@ require("lazy-settings")    -- lazy settings to make it run faster and get custo
 require("display-settings") -- options for nvim
 require("after.plugins")    -- plugins
 require("mason").setup()    -- mason wasn't working without this thing
+require('lspconfig')        -- idk wby but lsp sometimes doesn't work without it
