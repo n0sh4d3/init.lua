@@ -30,7 +30,27 @@ return {
             local cmp = require("cmp")
             local luasnip = require("luasnip")
             luasnip.config.setup({})
+            cmp.setup({
+                view = {
+                    entries = "wildcard",
+                },
+            })
+            cmp.setup({
+                formatting = {
+                    format = function(entry, vim_item)
+                        vim_item.menu = ({
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[LuaSnip]",
+                            buffer = "[Buffer]",
+                            path = "[Path]",
+                            nvim_lua = "[Lua]",
+                            latex_symbols = "[Latex]",
+                        })[entry.source.name]
 
+                        return vim_item
+                    end,
+                },
+            })
             cmp.setup({
                 snippet = {
                     expand = function(args)

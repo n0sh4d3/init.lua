@@ -34,14 +34,21 @@ vim.api.nvim_set_keymap("n", "<leader>j", ":NvimTreeToggle<CR> :vertical resize 
 
 vim.keymap.set("n", "<leader><CR>", ":!python3 %<CR>")
 
+-- for toggable terminal
 vim.keymap.set("n", "<A-h>", ":ToggleTerm size=10 direction=horizontal<CR>")
 vim.keymap.set("t", "<A-h>", "exit<CR>")
+
+-- telescope extensions
 vim.keymap.set("n", "<leader>fo", ":Telescope oldfiles<CR>")
 vim.keymap.set("n", "<leader>gs", ":Telescope git_status<CR>")
 vim.keymap.set("n", "<leader>gc", ":Telescope git_commits<CR>")
 vim.keymap.set("n", "<leader>ch", ":Telescope keymaps<CR>")
 vim.keymap.set("n", "<leader>k", ":Telescope buffers<CR>")
+
+-- navigation between buffers
 vim.keymap.set("n", "<C-h>", ":bprev<CR>")
 vim.keymap.set("n", "<C-l>", ":bnext<CR>")
+
+-- close current buffer
 vim.keymap.set("n", "<C-x>", ":bd<CR>")
 vim.keymap.set("n", "<S-x>", ":BufferLineCloseOthers<CR>")

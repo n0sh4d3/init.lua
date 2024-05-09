@@ -15,17 +15,3 @@ require("lazy").setup({
 
 require("remaps.remaps")
 require("settings")
-
-
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "single"
-})
-local cmp = require("cmp")
-local luasnip = require("luasnip")
-
-luasnip.config.setup({})
-cmp.setup({
-    view = {
-        entries = "wildcard",
-    },
-})

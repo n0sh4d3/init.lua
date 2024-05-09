@@ -24,17 +24,17 @@ return {
                 },
                 sections = {
                     lualine_a = { 'mode' },
-                    lualine_b = { 'branch', 'diff' },
-                    lualine_c = { 'filename' },
-                    lualine_x = { 'filetype' },
-                    lualine_y = { 'progress' },
-                    lualine_z = { 'hostname' }
+                    lualine_b = { 'diagnostics', 'diff' },
+                    lualine_c = {},
+                    lualine_x = { 'filesize' },
+                    lualine_y = { 'progress', 'location' },
+                    lualine_z = { 'branch' }
                 },
                 inactive_sections = {
                     lualine_a = {},
                     lualine_b = {},
                     lualine_c = { 'filename' },
-                    lualine_x = { 'location' },
+                    lualine_x = { 'filesize' },
                     lualine_y = {},
                     lualine_z = {}
                 },
