@@ -9,6 +9,7 @@ end
 return {
     {
         "catppuccin/nvim",
+        --        "Mofiqul/vscode.nvim",
         event = "VeryLazy",
         init = function()
             vim.cmd.colorscheme("catppuccin")

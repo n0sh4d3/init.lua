@@ -1,7 +1,9 @@
 local mappings = {
     ['('] = { '()<Left>', { noremap = true, silent = true } },
     ['['] = { '[]<Left>', { noremap = true, silent = true } },
-    ['{'] = { '{}<Left>', { noremap = true, silent = true } }
+    ['{'] = { '{}<Left>', { noremap = true, silent = true } },
+    ['"'] = { '""<Left>', { noremap = true, silent = true } },
+    ["'"] = { "''<Left>", { noremap = true, silent = true } },
 }
 
 for lhs, rhs in pairs(mappings) do
