@@ -3,6 +3,7 @@ require("lazy").setup({
 
         {
             import = "after.plugins",
+            dit = "~/.config/nvim/lua/own_plugins/autopairs.lua"
         },
     },
 
