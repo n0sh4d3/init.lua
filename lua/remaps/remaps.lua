@@ -6,8 +6,8 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 
-
-
+-- split buff
+vim.keymap.set("n", "<leader>j", "<C-w><C-v><C-w><C-l>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -18,6 +18,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- yanking stuff
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
@@ -43,5 +44,3 @@ vim.keymap.set("n", "<leader>gs", ":Telescope git_status<CR>")
 vim.keymap.set("n", "<leader>gc", ":Telescope git_commits<CR>")
 vim.keymap.set("n", "<leader>ch", ":Telescope keymaps<CR>")
 vim.keymap.set("n", "<leader>k", ":Telescope buffers<CR>")
-
-
