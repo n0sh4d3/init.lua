@@ -32,9 +32,6 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("n", "<leader><CR>", ":!python3 %<CR>")
 
--- for toggable terminal
-vim.keymap.set("n", "<A-h>", ":ToggleTerm size=10 direction=horizontal<CR>")
-vim.api.nvim_set_keymap('t', '<A-h>', [[<C-\><C-n>:q!<CR>]], { noremap = true })
 
 -- telescope extensions
 vim.keymap.set("n", "<leader>fo", ":Telescope oldfiles<CR>")
