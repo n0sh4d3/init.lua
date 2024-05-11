@@ -2,6 +2,7 @@ local mappings = {
     ['('] = { '()<Left>', { noremap = true, silent = true } },
     ['['] = { '[]<Left>', { noremap = true, silent = true } },
     ['{'] = { '{}<Left>', { noremap = true, silent = true } },
+    ['<'] = { '<><Left>', { noremap = true, silent = true } },
     ['"'] = { '""<Left>', { noremap = true, silent = true } },
     ["'"] = { "''<Left>", { noremap = true, silent = true } },
 }

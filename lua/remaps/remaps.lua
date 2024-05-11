@@ -26,11 +26,10 @@ vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 
 -- for go stuff
 vim.keymap.set("n", "<leader>e", ":GoIfErr<CR>")
-vim.keymap.set("n", "<leader>p", ":GoPkgOutline<CR>")
-vim.keymap.set("n", "<leader>t", ":GoAddAllTest<CR>")
 vim.keymap.set("n", "<leader>l", ":GoListImports<CR>")
 
-vim.api.nvim_set_keymap("n", "<leader>j", ":NvimTreeToggle<CR> :vertical resize 30<CR>", { noremap = true })
+
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("n", "<leader><CR>", ":!python3 %<CR>")
 
@@ -45,10 +44,4 @@ vim.keymap.set("n", "<leader>gc", ":Telescope git_commits<CR>")
 vim.keymap.set("n", "<leader>ch", ":Telescope keymaps<CR>")
 vim.keymap.set("n", "<leader>k", ":Telescope buffers<CR>")
 
--- navigation between buffers
-vim.keymap.set("n", "<C-h>", ":bprev<CR>")
-vim.keymap.set("n", "<C-l>", ":bnext<CR>")
 
--- close current buffer
-vim.keymap.set("n", "<A-x>", ":bd<CR>")
-vim.keymap.set("n", "<S-x>", ":BufferLineCloseOthers<CR>")
