@@ -27,9 +27,10 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "<leader>e", ":GoIfErr<CR>")
 vim.keymap.set("n", "<leader>l", ":GoListImports<CR>")
 
-
+-- netrw
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+-- don't ask me about it
 vim.keymap.set("n", "<leader><CR>", ":!python3 %<CR>")
 
 
