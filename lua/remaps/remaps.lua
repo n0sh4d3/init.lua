@@ -6,6 +6,10 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 
+-- for toggable terminal
+vim.keymap.set("n", "<A-h>", ":ToggleTerm size=10 direction=horizontal<CR>")
+vim.api.nvim_set_keymap('t', '<A-h>', [[<C-\><C-n>:q!<CR>]], { noremap = true })
+
 -- split buff
 vim.keymap.set("n", "<leader>j", "<C-w><C-v><C-w><C-l>")
 
