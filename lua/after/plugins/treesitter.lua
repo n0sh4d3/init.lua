@@ -2,10 +2,9 @@ return {
 
     {
         "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
         build = ":TSUpdate",
         opts = {
-            ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
+            ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc", "go", "python" },
             auto_install = true,
             highlight = {
                 enable = true,

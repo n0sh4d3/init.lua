@@ -1,7 +1,6 @@
 return {
     {
         "neovim/nvim-lspconfig",
-        event = "BufRead",
         dependencies = {
             "williamboman/mason.nvim",
             cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
@@ -56,6 +55,9 @@ return {
             capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
             local servers = {
+                gopls = {
+                    usePlaceholders = true,
+                },
                 lua_ls = {
                     settings = {
                         Lua = {
@@ -73,11 +75,6 @@ return {
             vim.list_extend(ensure_installed, {
                 "gopls",
                 "stylua",
-                "selene",
-                "pyright",
-                "black",
-                "ruff",
-                "mypy",
             })
             require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

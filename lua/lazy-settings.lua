@@ -3,18 +3,12 @@ require("lazy").setup({
 
         {
             import = "after.plugins",
-            dit = "~/.config/nvim/lua/own_plugins/autopairs.lua"
+            dir = "~/.config/nvim/lua/own_plugins/autopairs.lua"
         },
     },
 
-    defaults = {
-        lazy = true,
-        version = false,
-        autocmds = true,
-        keymaps = false,
-    },
 
-    checker = { enabled = false },
+    checker = { enabled = true },
 
     change_detection = {
         enable = false,
