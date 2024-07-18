@@ -7,7 +7,7 @@ return {
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
 
-            { "j-hui/fidget.nvim", opts = {} },
+            { "j-hui/fidget.nvim", opts = {}, enabled = false, },
         },
         config = function()
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -56,7 +56,30 @@ return {
 
             local servers = {
                 gopls = {
-                    usePlaceholders = true,
+                    settings = {
+                        gopls = {
+                            analyses = {
+                                unusedparams = true,
+                                shadow = true,
+                            },
+                            staticcheck = true,
+                            completeUnimported = true,
+                            usePlaceholders = true,
+                            codelenses = {
+                                generate = true,
+                                refrences = true,
+                            },
+                            hints = {
+                                assignVariableTypes = true, --useless
+                                compositeLiteralFields = true,
+                                compositeLiteralTypes = true,
+                                constantValues = true,
+                                functionTypeParameters = true,
+                                parameterNames = true, --function paramater names
+                                rangeVariableTypes = true,
+                            },
+                        },
+                    },
                 },
                 lua_ls = {
                     settings = {

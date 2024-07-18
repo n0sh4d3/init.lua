@@ -1,9 +1,18 @@
 return {
     {
-        "catppuccin/nvim",
+        "rose-pine/neovim",
+        name = "rose-pine",
         event = "VeryLazy",
+        config = function()
+            require('rose-pine').setup({
+                disable_background = false,
+                styles = {
+                    italic = false,
+                },
+            })
+        end,
         init = function()
-            vim.cmd.colorscheme("catppuccin")
+            vim.cmd.colorscheme("rose-pine")
         end,
     },
     {
