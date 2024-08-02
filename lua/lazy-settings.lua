@@ -3,12 +3,10 @@ require("lazy").setup({
 
         {
             import = "after.plugins",
-            dir = "~/.config/nvim/lua/own_plugins/autopairs.lua"
         },
     },
 
 
-    checker = { enabled = true },
 
     change_detection = {
         enable = false,
