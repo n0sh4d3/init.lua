@@ -4,14 +4,17 @@ return {
         event = "VeryLazy",
         config = function()
             require("tokyonight").setup({
-                style = "night",        -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-                transparent = false,    -- yeah i got better iterm background than plain color
-                terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+                style = "night",         -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+                transparent = false,     -- Enable this to disable setting the background color
+                terminal_colors = false, -- Configure the colors used when opening a `:terminal` in Neovim
                 styles = {
-                    comments = { italic = true },
+                    -- Style to be applied to different syntax groups
+                    -- Value is any valid attr-list value for `:help nvim_set_hl`
+                    comments = { italic = false },
                     keywords = { italic = false },
-                    sidebars = "dark",      -- style for sidebars
-                    floats = "transparent", -- style for floating windows
+                    -- Background styles. Can be "dark", "transparent" or "normal"
+                    sidebars = "transparent", -- style for sidebars, see below
+                    floats = "transparent",   -- style for floating windows
                 },
                 on_highlights = function(hl, c)
                     local bright_blue             = "#79C9F7"

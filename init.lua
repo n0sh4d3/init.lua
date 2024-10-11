@@ -16,6 +16,7 @@ require('lspconfig')        -- idk wby but lsp sometimes doesn't work without it
 
 
 
+
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
 

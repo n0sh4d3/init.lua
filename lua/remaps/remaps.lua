@@ -36,6 +36,7 @@ vim.keymap.set(
     "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
 )
 
+vim.keymap.set("t", "<C-c", "<Esc><Esc>")
 
 -- telescope extensions
 vim.keymap.set("n", "<leader>fo", ":Telescope oldfiles<CR>")
