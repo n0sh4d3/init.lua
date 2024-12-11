@@ -18,6 +18,14 @@ return {
         },
         config = function()
             require("telescope").setup({
+                layout_config = {
+                    window = {
+                        border = true,
+                        height = 0.95,
+                        width = 0.95,
+                        backdrop = 0.5
+                    }
+                },
                 extensions = {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown(),
