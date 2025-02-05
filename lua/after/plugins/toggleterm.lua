@@ -8,8 +8,8 @@ return {
     {
         'sbdchd/neoformat'
     },
-    {
-        "Glench/Vim-Jinja2-Syntax",
-        event = "VeryLazy"
-    },
+    -- {
+    --     "Glench/Vim-Jinja2-Syntax",
+    --     event = "VeryLazy"
+    -- },
 }

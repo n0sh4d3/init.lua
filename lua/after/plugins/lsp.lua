@@ -84,11 +84,11 @@ return {
 
             local ensure_installed = vim.tbl_keys(servers)
             vim.list_extend(ensure_installed, {
-                -- "gopls",
+                "gopls",
                 "stylua",
                 "clangd", -- Make sure clangd is included here
-                "htmx-lsp",
-                -- "templ",
+                "rust-analyzer",
+                "clang-format",
             })
             require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

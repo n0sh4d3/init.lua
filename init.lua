@@ -1,3 +1,6 @@
+-- display-settings.lua ma opcje dodania tej krechy jebanej
+
+
 vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -13,6 +16,8 @@ require("after.plugins")    -- plugins
 require("mason").setup()    -- mason wasn't working without this thing
 require('lspconfig')        -- idk wby but lsp sometimes doesn't work without it
 
+-- my colorscheme
+-- vim.cmd("colorscheme neurotoxin")
 
 
 

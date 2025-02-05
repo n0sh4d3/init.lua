@@ -24,8 +24,8 @@ require("lazy").setup({
         wrap = true,
         backdrop = 80,
         border = "rounded",
-        title = " ＭＡＳＴＥＲＭＩＮＤ",
-        title_pos = "left",
+        title = "giga szef",
+        title_pos = "center",
     },
 
     performance = {

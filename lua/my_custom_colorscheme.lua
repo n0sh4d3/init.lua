@@ -1,6 +1,3 @@
--- MyCustomColorscheme for NVim
-
--- Define a function for setting highlight groups
 local function highlight(group, fg, bg, attr)
     local cmd = 'highlight ' .. group
     if fg then cmd = cmd .. ' guifg=' .. fg end
