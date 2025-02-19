@@ -35,3 +35,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 	border = "single",
 })
+vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkwait300-blinkon200-blinkoff150"

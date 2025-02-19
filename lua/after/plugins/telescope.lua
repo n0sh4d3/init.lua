@@ -18,14 +18,19 @@ return {
         },
         config = function()
             require("telescope").setup({
-                layout_config = {
-                    window = {
-                        border = true,
-                        height = 0.95,
-                        width = 0.95,
-                        backdrop = 0.5
+                defaults = {
+                    prompt_prefix = "  ", -- Cyber terminal prompt
+                    selection_caret = "❯ ", -- Futuristic pointer
+                    entry_prefix = " ",
+                    layout_strategy = "horizontal", -- Best for file preview
+                    layout_config = {
+                        width = 0.78,
+                        height = 0.88,
+                        preview_cutoff = 120, -- When to show preview
                     }
+
                 },
+
                 extensions = {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown(),
