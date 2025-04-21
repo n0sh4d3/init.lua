@@ -1,5 +1,3 @@
---          👁️  WELCOME TO THE VOID, MORTAL.  👁️
-
 return {
     {
         "hrsh7th/nvim-cmp",
@@ -30,31 +28,34 @@ return {
             "hrsh7th/cmp-buffer",
         },
 
-        -- 🩸 The Heart of the Beast 🩸
+        -- ⚡ 闇の力が目覚める ⚡
+        -- ここから本当の力を引き出す
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")
-            luasnip.config.setup({}) -- The Whispering Shadows Setup
+            luasnip.config.setup({}) -- 闇の囁き、全ては影の中
 
-            -- ⚡ Formatting: The Hidden Cipher ⚡
+            -- 💀 この書式は暗号のように難解 💀
             cmp.setup({
                 formatting = {
                     format = function(entry, vim_item)
                         vim_item.menu = ({
-                            nvim_lsp = "[LSP]",
-                            luasnip = "[LuaSnip]",
-                            buffer = "[Buffer]",
-                            path = "[Path]",
-                            nvim_lua = "[Lua]",
-                            latex_symbols = "[Latex]",
+                            nvim_lsp = "[LSP] 関数", -- "[LSP] Function"
+                            luasnip = "[LuaSnip] スニペット", -- "[LuaSnip] Snippet"
+                            buffer = "[バッファ] 変数", -- "[Buffer] Variable"
+                            path = "[パス] 経路", -- "[Path] Path"
+                            nvim_lua = "[Lua] ルア", -- "[Lua] Lua"
+                            latex_symbols = "[LaTeX] 記号", -- "[LaTeX] Symbol"
                         })[entry.source.name]
+
 
                         return vim_item
                     end,
                 },
             })
 
-            -- 🕷️ Completion Setup: Invoke the Dark Arts 🕷️
+            -- 🕷️ 完成の呪文を唱える 🕷️
+            -- これでコンプリートが動き出す
             cmp.setup({
                 snippet = {
                     expand = function(args)
@@ -67,7 +68,7 @@ return {
                     documentation = cmp.config.window.bordered(),
                 },
 
-                -- ⛓️ Keybindings: The Secret Ritual ⛓️
+                -- ⛓️ 秘密の儀式: キーバインディング ⛓️
                 mapping = cmp.mapping.preset.insert({
                     ["<C-n>"] = cmp.mapping.select_next_item(),
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -76,7 +77,7 @@ return {
                     ["<C-y>"] = cmp.mapping.confirm({ select = true }),
                     ["<C-Space>"] = cmp.mapping.complete({}),
 
-                    -- ⚰️ The Forbidden Keys ⚰️
+                    -- ⚰️ 禁断の技: ジャンプ、展開 ⚰️
                     ["<C-l>"] = cmp.mapping(function()
                         if luasnip.expand_or_locally_jumpable() then
                             luasnip.expand_or_jump()
@@ -89,7 +90,7 @@ return {
                     end, { "i", "s" }),
                 }),
 
-                -- ☠️ Data Sources: Extracted from the Abyss ☠️
+                -- ☠️ 闇の源からの情報源 ☠️
                 sources = {
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
@@ -100,6 +101,6 @@ return {
     }
 }
 
--- 🕶️ Only the worthy may decode this.
--- 🕶️ They will see... and they will fear.
--- 🕶️ The Hacker's Code runs deep.
+-- 🕶️ このコードは選ばれし者にしか解けない 🕶️
+-- 🕶️ 彼らはネットワークの深淵に触れる運命にある 🕶️
+-- 🕶️ ハッカーのコードは壊れない、理解する者だけがその力を得る 🕶️

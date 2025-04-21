@@ -1,63 +1,119 @@
 return {
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        event = "BufEnter *.*",
-        init = function()
-            vim.g.lualine_laststatus = vim.o.laststatus
-            if vim.fn.argc(-1) > 0 then
-                -- set an empty statusline till lualine loads
-                vim.o.statusline = " "
-            else
-                -- hide the statusline on the starter page
-                vim.o.laststatus = 0
-            end
-        end,
-        config = function()
-            require('lualine').setup {
-                options = {
-                    icons_enabled = true,
-                    theme = 'auto',
-                    component_separators = { left = ' ', right = ' ' }, -- Glitch effect
-                    section_separators = { left = '█▓▒░', right = '░▒▓█' }, -- Cyber grid
-                    always_divide_middle = true,
-                    globalstatus = true,
-                },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local colors = {
+        sakura = "#FFB7C5",
+        indigo = "#6E76B4",
+        matcha = "#7CFC00",
+        ocean = "#5DADE2",
+        sunset = "#FF7E5F",
+        charcoal = "#36454F"
+      }
 
-                -- 🩸 ACTIVE SECTIONS: HACKER WARZONE 🩸
-                sections = {
-                    lualine_a = {
-                        { 'mode',
-                            color = { fg = '#FF003C', gui = 'bold' },
-                            icon = '󰀘' -- POWER MODE
-                        }
-                    },
-                    lualine_b = {
-                        { 'branch', icon = '', color = { fg = '#8A2BE2' } }, -- Git Branch in War Mode
-                        { 'diff', color = { fg = '#00FFFF' } }, -- Cyan diff stats
-                        { 'diagnostics', color = { fg = '#FF4500' } } -- Red alert for errors
-                    },
-                    lualine_c = {
-                        { 'filename', color = { fg = '#39FF14' }, icon = '' } -- Hacker green filenames
-                    },
-                    lualine_x = {
-                        { 'encoding', color = { fg = '#FF4500' }, icon = '' }, -- Encoding as a hacked script
-                    },
-                    lualine_y = {
-                        { 'progress', color = { fg = '#EAEAEA' }, icon = '󰖩' } -- Live system scan progress
-                    },
-                    lualine_z = {
-                        { 'location', color = { fg = '#FF003C', gui = 'bold' }, icon = '󰁽' } -- Red alert location tracking
-                    }
-                },
-
-                -- ☠️ INACTIVE SECTIONS: THE SYSTEM WAITS ☠️
-                inactive_sections = {
-                    lualine_c = { { 'filename', color = { fg = '#4A4A4A' }, icon = '󰈸' } }, -- Dark mode filename
-                    lualine_x = { { 'location', color = { fg = '#4A4A4A' }, icon = '󰈸' } } -- Muted location
-                },
+      require('lualine').setup {
+        options = {
+          icons_enabled = true,
+          theme = 'tokyonight',
+          component_separators = { left = '|', right = '|' },
+          section_separators = { left = ' ', right = ' ' },
+          globalstatus = true,
+          always_divide_middle = true,
+        },
+        sections = {
+          lualine_a = {
+            {
+              'mode',
+              icon = '',
+              fmt = function(str)
+                return '作戦: ' .. str -- "Mission: Insert"
+              end,
+              color = { fg = colors.charcoal, bg = colors.sakura, gui = 'bold' }
             }
-        end
-    },
+          },
+          lualine_b = {
+            {
+              'branch',
+              icon = ''
+            },
+            {
+              'diff',
+              symbols = { added = '+', modified = '~', removed = '-' },
+              diff_color = {
+                added = { fg = colors.matcha },
+                modified = { fg = colors.ocean },
+                removed = { fg = colors.sunset },
+              }
+            },
+            {
+              'diagnostics',
+              symbols = {
+                error = 'エラー', -- "Error"
+                warn  = '警告', -- "Warning"
+                info  = '情報', -- "Info"
+                hint  = 'ヒント' -- "Hint"
+              },
+              diagnostics_color = {
+                error = { fg = "#FF0000" },
+                warn = { fg = "#FFFF00" },
+                info = { fg = "#00FFFF" },
+                hint = { fg = "#00FF00" },
+              }
+            },
+          },
+          lualine_c = {
+            {
+              'filename',
+              path = 1,
+              symbols = {
+                modified = ' ✎',
+                readonly = ' 🔒',
+                unnamed = '[無名]' -- "Unnamed"
+              }
+            }
+          },
+          lualine_x = {
+            { 'encoding' },
+            { 'fileformat' },
+            {
+              'filetype',
+              icon_only = true
+            }
+          },
+          lualine_y = {
+            {
+              'progress',
+              icon = '進捗' -- "Progress"
+            }
+          },
+          lualine_z = {
+            {
+              'location',
+              icon = '座標' -- "Coordinates"
+            }
+          }
+        },
+        tabline = {
+          lualine_a = {
+            {
+              'tabs',
+              mode = 2,
+              fmt = function(name)
+                return 'タブ: ' .. name -- "Tab: <name>"
+              end
+            }
+          },
+          lualine_z = {
+            {
+              function()
+                return '時刻: ' .. os.date("%H:%M") -- "Time"
+              end
+            }
+          }
+        },
+        extensions = { 'nvim-tree', 'toggleterm', 'quickfix' }
+      }
+    end
+  }
 }
--- 🕶️ You are now running in ghost mode. No logs. No traces. 🕶️
