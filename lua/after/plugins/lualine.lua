@@ -3,19 +3,27 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
+      -- Get catppuccin mocha colors specifically
+      local cp = require("catppuccin.palettes").get_palette("mocha")
+
       local colors = {
-        sakura = "#FFB7C5",
-        indigo = "#6E76B4",
-        matcha = "#7CFC00",
-        ocean = "#5DADE2",
-        sunset = "#FF7E5F",
-        charcoal = "#36454F"
+        sakura = cp.mauve,     -- Catppuccin Mocha's mauve (lavender/pinkish purple)
+        indigo = cp.blue,      -- Catppuccin Mocha's blue
+        matcha = cp.green,     -- Catppuccin Mocha's green
+        ocean = cp.teal,       -- Catppuccin Mocha's teal
+        sunset = cp.peach,     -- Catppuccin Mocha's peach for sunset glow
+        charcoal = cp.surface1 -- Catppuccin Mocha's darker tone for contrast
       }
+
+      -- Function to check if a macro is being recorded
+      local function is_macro_recording()
+        return vim.fn.reg_recording() ~= ''
+      end
 
       require('lualine').setup {
         options = {
           icons_enabled = true,
-          theme = 'tokyonight',
+          theme = 'catppuccin', -- Using catppuccin theme
           component_separators = { left = '|', right = '|' },
           section_separators = { left = ' ', right = ' ' },
           globalstatus = true,
@@ -30,6 +38,14 @@ return {
                 return '作戦: ' .. str -- "Mission: Insert"
               end,
               color = { fg = colors.charcoal, bg = colors.sakura, gui = 'bold' }
+            },
+            -- Macro recording indicator
+            {
+              function()
+                return is_macro_recording() and 'Rec' or '' -- Display "Rec" if macro is being recorded
+              end,
+              color = { fg = cp.red, bg = colors.charcoal, gui = 'bold' },
+              separator = '|'
             }
           },
           lualine_b = {
@@ -55,10 +71,10 @@ return {
                 hint  = 'ヒント' -- "Hint"
               },
               diagnostics_color = {
-                error = { fg = "#FF0000" },
-                warn = { fg = "#FFFF00" },
-                info = { fg = "#00FFFF" },
-                hint = { fg = "#00FF00" },
+                error = { fg = cp.red },
+                warn = { fg = cp.yellow },
+                info = { fg = cp.teal },
+                hint = { fg = cp.green },
               }
             },
           },
@@ -67,8 +83,8 @@ return {
               'filename',
               path = 1,
               symbols = {
-                modified = ' ✎',
-                readonly = ' 🔒',
+                modified = ' *',
+                readonly = ' *',
                 unnamed = '[無名]' -- "Unnamed"
               }
             }
@@ -114,6 +130,18 @@ return {
         },
         extensions = { 'nvim-tree', 'toggleterm', 'quickfix' }
       }
+
+      -- Optional: Define special highlights to better integrate with Catppuccin Mocha specifically
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        pattern = "*",
+        callback = function()
+          -- Re-apply custom highlights whenever the colorscheme changes
+          local mocha = require("catppuccin.palettes").get_palette("mocha")
+          vim.api.nvim_set_hl(0, "LualineMode", { fg = mocha.surface1, bg = mocha.mauve, bold = true })
+          vim.api.nvim_set_hl(0, "LualineBranch", { fg = mocha.blue, bg = mocha.base })
+          vim.api.nvim_set_hl(0, "LualineFilename", { fg = mocha.text, bg = mocha.base })
+        end,
+      })
     end
   }
 }
