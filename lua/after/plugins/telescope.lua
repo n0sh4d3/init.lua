@@ -19,16 +19,13 @@ return {
       },
     },
     config = function()
-      -- Get Catppuccin Mocha colors for consistency
-      local mocha = require("catppuccin.palettes").get_palette("mocha")
-
       -- Set up Japanese translations for all prompt titles
       local japanese_titles = {
         -- Pickers
         find_files = "ファイル検索 【サイバー探索】",
         git_files = "Git ファイル 【リポジトリ】",
         buffers = "バッファ 【メモリ状態】",
-        oldfiles = "履歴 【アクセス記録】",
+        oldfiles = "履歴 【アク[48;35;130;1680;2860tセス記録】",
         live_grep = "ライブ検索 【リアルタイム解析】",
         grep_string = "文字列検索 【ハッキング】",
         help_tags = "ヘルプ 【支援データベース】",
@@ -55,8 +52,10 @@ return {
         git_branches = "Gitブランチ 【分岐一覧】",
         git_status = "Git状態 【変更状況】",
         git_stash = "Gitスタッシュ 【一時保存】",
+
         -- Results titles
-        results = "検索結果 uwu",
+        results = "検索結果",
+
         -- Common actions
         select = "選択",
         paste = "貼り付け",
@@ -68,15 +67,18 @@ return {
         filter = "フィルター",
         preview = "プレビュー",
       }
-      -- Setup telescope with Japanese UI and Catppuccin Mocha theme
+
+      -- Setup telescope with Japanese UI
       require("telescope").setup({
         defaults = {
-          prompt_prefix = " にゃん  ",
+          prompt_prefix = " サイバー  ",
           selection_caret = "❯❯ ",
           entry_prefix = "  ",
           multi_icon = "⦿ ",
+
           -- Default Japanese titles
           results_title = japanese_titles.results,
+
           -- Layout and styling
           layout_strategy = "horizontal",
           layout_config = {
@@ -91,13 +93,16 @@ return {
               preview_height = 0.65,
             },
           },
-          -- Fancy border style compatible with catppuccin mocha
+
+          -- Fancy border style compatible with tokyonight-night
           borderchars = { "━", "┃", "━", "┃", "╭", "╮", "╯", "╰" },
+
           sorting_strategy = "ascending",
           selection_strategy = "reset",
           scroll_strategy = "cycle",
           color_devicons = true,
           winblend = 0,
+
           mappings = {
             i = {
               ["<C-j>"] = "move_selection_next",
@@ -105,6 +110,7 @@ return {
             },
           },
         },
+
         -- Japanese pickers settings
         pickers = {
           find_files = {
@@ -152,10 +158,11 @@ return {
             results_title = japanese_titles.results,
           },
         },
+
         extensions = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({
-              prompt_title = "【選択メニュー】uwu",
+              prompt_title = "【選択メニュー】",
               results_title = "選択オプション",
               layout_config = {
                 width = 0.6,
@@ -172,31 +179,32 @@ return {
           },
         },
       })
+
       -- Load extensions
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
 
-      -- Integration with catppuccin mocha color scheme
+      -- Integration with tokyonight-night color scheme
+      -- These highlight colors will work well with tokyonight-night
       vim.cmd([[
         augroup TelescopeJapaneseColors
           autocmd!
-          autocmd ColorScheme * highlight TelescopePromptTitle guifg=]] .. mocha.mauve .. [[ guibg=]] .. mocha.base .. [[
-          autocmd ColorScheme * highlight TelescopeResultsTitle guifg=]] .. mocha.blue .. [[ guibg=]] .. mocha.base .. [[
-          autocmd ColorScheme * highlight TelescopePreviewTitle guifg=]] .. mocha.teal .. [[ guibg=]] .. mocha.base .. [[
-          autocmd ColorScheme * highlight TelescopePromptBorder guifg=]] .. mocha.mauve .. [[ guibg=NONE
-          autocmd ColorScheme * highlight TelescopeResultsBorder guifg=]] .. mocha.blue .. [[ guibg=NONE
-          autocmd ColorScheme * highlight TelescopePreviewBorder guifg=]] .. mocha.teal .. [[ guibg=NONE
-          autocmd ColorScheme * highlight TelescopePromptPrefix guifg=]] .. mocha.red .. [[ guibg=NONE
-          autocmd ColorScheme * highlight TelescopeSelectionCaret guifg=]] ..
-        mocha.red .. [[ guibg=]] .. mocha.surface1 .. [[
-          autocmd ColorScheme * highlight TelescopeSelection guifg=]] ..
-        mocha.text .. [[ guibg=]] .. mocha.surface1 .. [[
-          autocmd ColorScheme * highlight TelescopeMatching guifg=]] .. mocha.peach .. [[ guibg=NONE gui=bold
+          autocmd ColorScheme * highlight TelescopePromptTitle guifg=#bb9af7 guibg=#1a1b26
+          autocmd ColorScheme * highlight TelescopeResultsTitle guifg=#7aa2f7 guibg=#1a1b26
+          autocmd ColorScheme * highlight TelescopePreviewTitle guifg=#7dcfff guibg=#1a1b26
+          autocmd ColorScheme * highlight TelescopePromptBorder guifg=#bb9af7 guibg=NONE
+          autocmd ColorScheme * highlight TelescopeResultsBorder guifg=#7aa2f7 guibg=NONE
+          autocmd ColorScheme * highlight TelescopePreviewBorder guifg=#7dcfff guibg=NONE
+          autocmd ColorScheme * highlight TelescopePromptPrefix guifg=#f7768e guibg=NONE
+          autocmd ColorScheme * highlight TelescopeSelectionCaret guifg=#f7768e guibg=#3b4261
+          autocmd ColorScheme * highlight TelescopeSelection guifg=#c0caf5 guibg=#3b4261
+          autocmd ColorScheme * highlight TelescopeMatching guifg=#ff9e64 guibg=NONE gui=bold
         augroup END
       ]])
 
       -- Japanese keymaps with cyberpunk descriptions
       local builtin = require("telescope.builtin")
+
       -- Override builtin pickers to use Japanese titles
       local original_builtin = {}
       for k, v in pairs(builtin) do
@@ -213,24 +221,31 @@ return {
           return original_builtin[k](opts)
         end
       end
+
       -- Set up keybindings with Japanese descriptions
       vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "📁 【探索】ファイル検索" })
+
       vim.keymap.set("n", "<leader>ca", function()
         vim.lsp.buf.code_action()
       end, { desc = "🛠️ 【修正】コードアクション" })
+
       vim.keymap.set("n", "<leader>/", function()
         builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
           winblend = 0,
           previewer = false,
         }))
       end, { desc = "🔍 【バッファ内】検索" })
+
       vim.keymap.set("n", "<leader>l", function()
         builtin.live_grep({
           grep_open_files = true,
         })
       end, { desc = "🕵️ 【全文】ライブグレップ" })
+
       vim.keymap.set("n", "<leader>?", builtin.oldfiles, { desc = "📜 【履歴】最近開いたファイル" })
+
       vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "📋 【メモリ】バッファリスト" })
+
       -- Create a custom telescope extension for Japanese help display
       local has_telescope = pcall(require, "telescope")
       if has_telescope then
@@ -240,13 +255,15 @@ return {
         local finders = require("telescope.finders")
         local sorters = require("telescope.sorters")
         local themes = require("telescope.themes")
+
         -- Japanese help function
         local japanese_help = function(opts)
           opts = opts or {}
+
           local help_items = {
-            { key = "j/k", desc = "選択を上下に移動 uwu" },
+            { key = "j/k", desc = "選択を上下に移動" },
             { key = "<Down>/<Up>", desc = "選択を上下に移動" },
-            { key = "<CR>", desc = "選択項目を開く にゃん~" },
+            { key = "<CR>", desc = "選択項目を開く" },
             { key = "<C-x>", desc = "水平分割で開く" },
             { key = "<C-v>", desc = "垂直分割で開く" },
             { key = "<C-t>", desc = "新しいタブで開く" },
@@ -256,10 +273,11 @@ return {
             { key = "<C-q>", desc = "選択をQuickfixに送信" },
             { key = "<Esc>", desc = "検索を終了" },
             { key = "<C-c>", desc = "検索を終了" },
-            { key = "?", desc = "キーマップヘルプを表示 uwu" },
+            { key = "?", desc = "キーマップヘルプを表示" },
           }
+
           pickers.new(opts, {
-            prompt_title = "🔰 テレスコープ【ヘルプ】にゃん~",
+            prompt_title = "🔰 テレスコープ【ヘルプ】",
             finder = finders.new_table {
               results = help_items,
               entry_maker = function(entry)
@@ -279,15 +297,18 @@ return {
             end,
           }):find()
         end
+
         -- Register the Japanese help function
         builtin.japanese_help = japanese_help
+
         -- Add a help keybinding
         vim.keymap.set("n", "<leader>fh", builtin.japanese_help, { desc = "🔰 【ヘルプ】テレスコープ" })
       end
+
       -- Add a startup message confirming Japanese style
       vim.defer_fn(function()
-        vim.notify("テレスコープ：かわいいカプチーノモード有効化 uwu", vim.log.levels.INFO, {
-          title = "【にゃんシステム】",
+        vim.notify("テレスコープ：日本語サイバーモード有効化", vim.log.levels.INFO, {
+          title = "【システム】",
         })
       end, 800)
     end,
