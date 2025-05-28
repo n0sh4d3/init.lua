@@ -184,24 +184,6 @@ return {
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
 
-      -- Integration with tokyonight-night color scheme
-      -- These highlight colors will work well with tokyonight-night
-      vim.cmd([[
-        augroup TelescopeJapaneseColors
-          autocmd!
-          autocmd ColorScheme * highlight TelescopePromptTitle guifg=#bb9af7 guibg=#1a1b26
-          autocmd ColorScheme * highlight TelescopeResultsTitle guifg=#7aa2f7 guibg=#1a1b26
-          autocmd ColorScheme * highlight TelescopePreviewTitle guifg=#7dcfff guibg=#1a1b26
-          autocmd ColorScheme * highlight TelescopePromptBorder guifg=#bb9af7 guibg=NONE
-          autocmd ColorScheme * highlight TelescopeResultsBorder guifg=#7aa2f7 guibg=NONE
-          autocmd ColorScheme * highlight TelescopePreviewBorder guifg=#7dcfff guibg=NONE
-          autocmd ColorScheme * highlight TelescopePromptPrefix guifg=#f7768e guibg=NONE
-          autocmd ColorScheme * highlight TelescopeSelectionCaret guifg=#f7768e guibg=#3b4261
-          autocmd ColorScheme * highlight TelescopeSelection guifg=#c0caf5 guibg=#3b4261
-          autocmd ColorScheme * highlight TelescopeMatching guifg=#ff9e64 guibg=NONE gui=bold
-        augroup END
-      ]])
-
       -- Japanese keymaps with cyberpunk descriptions
       local builtin = require("telescope.builtin")
 
