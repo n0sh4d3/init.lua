@@ -29,16 +29,11 @@ return {
         },
 
         config = function()
-            -- ╔════════════════════════════════════════════╗
-            -- ║ TokyoNight Storm CMP Setup Begins Now ⚡   ║
-            -- ╚════════════════════════════════════════════╝
-
             local cmp     = require("cmp")
             local luasnip = require("luasnip")
 
-            luasnip.config.setup({}) -- 🌑 Whispered secrets from the void
+            luasnip.config.setup({})
 
-            -- 💠 Fancy UI Formatting
             cmp.setup({
                 formatting = {
                     format = function(entry, vim_item)
@@ -55,7 +50,6 @@ return {
                 },
             })
 
-            -- ⚙️ Main Completion Engine Setup
             cmp.setup({
                 snippet = {
                     expand = function(args)
@@ -70,7 +64,6 @@ return {
                     documentation = cmp.config.window.bordered(),
                 },
 
-                -- ⌨️ Key Bindings for Completion + Snippet Dance
                 mapping = cmp.mapping.preset.insert({
                     ["<C-n>"]     = cmp.mapping.select_next_item(),
                     ["<C-p>"]     = cmp.mapping.select_prev_item(),
@@ -90,7 +83,6 @@ return {
                     end, { "i", "s" }),
                 }),
 
-                -- 📡 Completion Sources
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
                     { name = "luasnip" },

@@ -19,9 +19,8 @@ return {
       },
     },
     config = function()
-      -- Set up Japanese translations for all prompt titles
       local japanese_titles = {
-        -- Pickers
+
         find_files = "ファイル検索 【サイバー探索】",
         git_files = "Git ファイル 【リポジトリ】",
         buffers = "バッファ 【メモリ状態】",
@@ -53,10 +52,10 @@ return {
         git_status = "Git状態 【変更状況】",
         git_stash = "Gitスタッシュ 【一時保存】",
 
-        -- Results titles
+
         results = "検索結果",
 
-        -- Common actions
+
         select = "選択",
         paste = "貼り付け",
         delete = "削除",
@@ -68,7 +67,7 @@ return {
         preview = "プレビュー",
       }
 
-      -- Setup telescope with Japanese UI
+
       require("telescope").setup({
         defaults = {
           prompt_prefix = " サイバー  ",
@@ -76,10 +75,10 @@ return {
           entry_prefix = "  ",
           multi_icon = "⦿ ",
 
-          -- Default Japanese titles
+
           results_title = japanese_titles.results,
 
-          -- Layout and styling
+
           layout_strategy = "horizontal",
           layout_config = {
             width = 0.82,
@@ -94,7 +93,7 @@ return {
             },
           },
 
-          -- Fancy border style compatible with tokyonight-night
+
           borderchars = { "━", "┃", "━", "┃", "╭", "╮", "╯", "╰" },
 
           sorting_strategy = "ascending",
@@ -111,7 +110,7 @@ return {
           },
         },
 
-        -- Japanese pickers settings
+
         pickers = {
           find_files = {
             prompt_title = japanese_titles.find_files,
@@ -180,20 +179,20 @@ return {
         },
       })
 
-      -- Load extensions
+
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
 
-      -- Japanese keymaps with cyberpunk descriptions
+
       local builtin = require("telescope.builtin")
 
-      -- Override builtin pickers to use Japanese titles
+
       local original_builtin = {}
       for k, v in pairs(builtin) do
         original_builtin[k] = v
         builtin[k] = function(opts)
           opts = opts or {}
-          -- Apply Japanese title if available
+
           if japanese_titles[k] and not opts.prompt_title then
             opts.prompt_title = japanese_titles[k]
           end
@@ -204,7 +203,7 @@ return {
         end
       end
 
-      -- Set up keybindings with Japanese descriptions
+
       vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "📁 【探索】ファイル検索" })
 
       vim.keymap.set("n", "<leader>ca", function()
@@ -228,7 +227,7 @@ return {
 
       vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "📋 【メモリ】バッファリスト" })
 
-      -- Create a custom telescope extension for Japanese help display
+
       local has_telescope = pcall(require, "telescope")
       if has_telescope then
         local actions = require("telescope.actions")
@@ -238,7 +237,7 @@ return {
         local sorters = require("telescope.sorters")
         local themes = require("telescope.themes")
 
-        -- Japanese help function
+
         local japanese_help = function(opts)
           opts = opts or {}
 
@@ -280,14 +279,12 @@ return {
           }):find()
         end
 
-        -- Register the Japanese help function
         builtin.japanese_help = japanese_help
 
-        -- Add a help keybinding
+
         vim.keymap.set("n", "<leader>fh", builtin.japanese_help, { desc = "🔰 【ヘルプ】テレスコープ" })
       end
 
-      -- Add a startup message confirming Japanese style
       vim.defer_fn(function()
         vim.notify("テレスコープ：日本語サイバーモード有効化", vim.log.levels.INFO, {
           title = "【システム】",

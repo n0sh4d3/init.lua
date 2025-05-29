@@ -1,6 +1,3 @@
--- NEUROTOXIN.nvim - Dead Inside Edition (Lighter)
--- A colorscheme for the emotionally drained hacker
-
 local neurotoxin = {}
 neurotoxin.palette = {
   background       = '#151515',

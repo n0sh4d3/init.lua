@@ -1,5 +1,4 @@
 return {
-    -- lazy.nvim
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
@@ -7,8 +6,7 @@ return {
         "rcarriga/nvim-notify",
     },
     config = function()
-        -- Get tokyonight-night colors for consistency
-        local tokyonight_colors = require("tokyonight.colors").setup({ style = "night" })
+        local tokyonight_colors = require("tokyonight.colors").setup({ style = "storm" })
         local colors = {
             bg = tokyonight_colors.bg_dark,
             fg = tokyonight_colors.fg,
@@ -26,15 +24,12 @@ return {
 
         require("noice").setup({
             lsp = {
-                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
                 override = {
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                     ["vim.lsp.util.stylize_markdown"] = true,
-                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                    ["cmp.entry.get_documentation"] = true,
                 },
-                -- Japanese translations for LSP messages
                 message = {
-                    -- Override LSP message format
                     view = "notify",
                     view_error = "notify",
                     view_warn = "notify",
@@ -42,15 +37,13 @@ return {
                     view_search = "virtualtext",
                 },
             },
-            -- you can enable a preset for easier configuration
             presets = {
-                bottom_search = true,         -- use a classic bottom cmdline for search
-                command_palette = true,       -- position the cmdline and popupmenu together
-                long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = false,       -- add a border to hover docs and signature help
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = false,
             },
-            -- Japanese translations and hacker theme
             messages = {
                 enabled = true,
                 view = "notify",
@@ -60,10 +53,8 @@ return {
                 view_search = "virtualtext",
             },
             notify = {
-                -- Customize notifications
                 enabled = true,
                 view = "notify",
-                -- Japanese titles and hacker style
                 title = {
                     error = "【エラー】",
                     warn = "【警告】",
@@ -74,9 +65,8 @@ return {
             },
             cmdline = {
                 enabled = true,
-                view = "cmdline_popup", -- Changed to popup for enhanced styling
+                view = "cmdline_popup",
                 format = {
-                    -- Enhanced command line prompts with icons and styling
                     cmdline = {
                         icon = "∮ ",
                         pattern = "^:",
@@ -137,7 +127,6 @@ return {
                 enabled = true,
                 backend = "nui",
                 kind_icons = {
-                    -- Japanese descriptions for completion items
                     Class = "クラス",
                     Color = "カラー",
                     Constant = "定数",
@@ -161,7 +150,6 @@ return {
                     Variable = "変数",
                 },
             },
-            -- Custom hacker-style Japanese UI elements
             routes = {
                 {
                     filter = {
@@ -178,7 +166,6 @@ return {
                     opts = { title = "検索結果" },
                 },
             },
-            -- Enhanced styling for command mode
             views = {
                 cmdline_popup = {
                     position = {
@@ -237,7 +224,6 @@ return {
             },
         })
 
-        -- Define highlight groups to match tokyonight-night
         vim.api.nvim_set_hl(0, "NoiceCmdlinePopup", { bg = colors.bg })
         vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { fg = colors.blue, bg = colors.bg })
         vim.api.nvim_set_hl(0, "NoiceCmdlineTitle", { fg = colors.purple, bold = true })
@@ -251,11 +237,9 @@ return {
         vim.api.nvim_set_hl(0, "NoicePopupmenuBorder", { fg = colors.purple, bg = colors.bg })
         vim.api.nvim_set_hl(0, "NoicePopupmenuSelected", { bg = colors.selection })
 
-        -- Additional Japanese status messages
         vim.notify = require("notify")
         local original_notify = vim.notify
         vim.notify = function(msg, level, opts)
-            -- Translate common messages to Japanese
             local translations = {
                 ["saved"] = "保存完了",
                 ["yanked"] = "ヤンク完了",
@@ -264,14 +248,12 @@ return {
                 ["search hit TOP"] = "検索：上端到達",
             }
 
-            -- Look for common English phrases and translate them
             for eng, jpn in pairs(translations) do
                 if msg:match(eng) then
                     msg = msg:gsub(eng, jpn)
                 end
             end
 
-            -- Add hacker prefix to messages
             msg = "【ハッカー】" .. msg
 
             return original_notify(msg, level, opts)
