@@ -1,18 +1,30 @@
 return {
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      style = "storm",    -- Using the storm variant as requested
-      transparent = true, -- Enable transparency
-      styles = {
-        floats = "transparent",
+  'everviolet/nvim',
+  name = 'evergarden',
+  priority = 1000,
+  config = function()
+    require 'evergarden'.setup {
+      theme = {
+        variant = 'fall', -- 'winter'|'fall'|'spring'|'summer'
       },
-    },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.cmd("colorscheme tokyonight")
-    end
-  }
+      editor = {
+        transparent_background = true,
+        override_terminal = true,
+        sign = { color = 'none' },
+        float = {
+        },
+      },
+      style = {
+        tabline = { 'reverse' },
+        search = { 'italic', 'reverse' },
+        incsearch = { 'italic', 'reverse' },
+        types = { 'italic' },
+        keyword = { 'italic' },
+        comment = { 'italic' },
+      },
+      overrides = {},
+      color_overrides = {},
+    }
+    vim.cmd.colorscheme("evergarden")
+  end
 }

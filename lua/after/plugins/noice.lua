@@ -1,26 +1,35 @@
 return {
     "folke/noice.nvim",
     event = "VeryLazy",
+    -- enabled = false,
     dependencies = {
         "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify",
     },
     config = function()
-        local tokyonight_colors = require("tokyonight.colors").setup({ style = "storm" })
+        -- Pastel color palette
         local colors = {
-            bg = tokyonight_colors.bg_dark,
-            fg = tokyonight_colors.fg,
-            blue = tokyonight_colors.blue,
-            cyan = tokyonight_colors.cyan,
-            purple = tokyonight_colors.purple,
-            orange = tokyonight_colors.orange,
-            yellow = tokyonight_colors.yellow,
-            green = tokyonight_colors.green,
-            red = tokyonight_colors.red,
-            comment = tokyonight_colors.comment,
-            border = tokyonight_colors.border,
-            selection = tokyonight_colors.selection,
+            fg = "#e0e0e0",        -- Light foreground
+            blue = "#B2CFED",      -- PASTEL_BLUE
+            cyan = "#ACE0D4",      -- PASTEL_SKYE
+            purple = "#D0BBF0",    -- PASTEL_PURPLE
+            orange = "#F7A182",    -- PASTEL_ORANGE
+            yellow = "#F5D098",    -- PASTEL_YELLOW
+            green = "#CAE0A7",     -- PASTEL_GREEN
+            red = "#F57F82",       -- PASTEL_RED
+            pink = "#F3C0E5",      -- PASTEL_PINK
+            cherry = "#F6CEE5",    -- PASTEL_CHERRY
+            lime = "#DBE6AF",      -- PASTEL_LIME
+            aqua = "#ADDEB9",      -- PASTEL_AQUA
+            snow = "#AFDFE6",      -- PASTEL_SNOW
+            comment = "#8a8a8a",   -- Muted gray for comments
+            border = "#D0BBF0",    -- PASTEL_PURPLE for borders
+            selection = "#2a2a2a", -- Slightly lighter background for selections
         }
+
+        require("notify").setup({
+            background_colour = "#000000",
+        })
 
         require("noice").setup({
             lsp = {
@@ -224,17 +233,17 @@ return {
             },
         })
 
-        vim.api.nvim_set_hl(0, "NoiceCmdlinePopup", { bg = colors.bg })
-        vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { fg = colors.blue, bg = colors.bg })
+        -- Apply pastel color highlighting
+        vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { fg = colors.border })
         vim.api.nvim_set_hl(0, "NoiceCmdlineTitle", { fg = colors.purple, bold = true })
         vim.api.nvim_set_hl(0, "NoiceCmdlineIconCommand", { fg = colors.cyan })
         vim.api.nvim_set_hl(0, "NoiceCmdlineIconSearch", { fg = colors.orange })
         vim.api.nvim_set_hl(0, "NoiceCmdlineIconFilter", { fg = colors.yellow })
         vim.api.nvim_set_hl(0, "NoiceCmdlineIconLua", { fg = colors.blue })
         vim.api.nvim_set_hl(0, "NoiceCmdlineIconHelp", { fg = colors.green })
-        vim.api.nvim_set_hl(0, "NoiceCmdlineIconInput", { fg = colors.red })
+        vim.api.nvim_set_hl(0, "NoiceCmdlineIconInput", { fg = colors.pink })
         vim.api.nvim_set_hl(0, "NoicePopupmenu", { bg = colors.bg })
-        vim.api.nvim_set_hl(0, "NoicePopupmenuBorder", { fg = colors.purple, bg = colors.bg })
+        vim.api.nvim_set_hl(0, "NoicePopupmenuBorder", { fg = colors.border })
         vim.api.nvim_set_hl(0, "NoicePopupmenuSelected", { bg = colors.selection })
 
         vim.notify = require("notify")
