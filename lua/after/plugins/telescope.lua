@@ -160,7 +160,7 @@ return {
           selection_strategy = "reset",
           scroll_strategy = "cycle",
           color_devicons = true,
-          winblend = 15,
+          winblend = 0,
 
           mappings = {
             i = {
