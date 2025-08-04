@@ -1,7 +1,7 @@
 return {
   {
     'nvim-lualine/lualine.nvim',
-    -- enabled = false,
+    enabled = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       -- Custom component for macro recording

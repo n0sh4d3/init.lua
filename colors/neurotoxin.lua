@@ -1,19 +1,19 @@
 local neurotoxin = {}
 neurotoxin.palette = {
-  background       = '#151515',
-  foreground       = '#d5d3d9', -- Lighter desaturated gray
-  statement        = '#8c949e', -- Lighter muted blue-gray
-  strings          = '#707867', -- Lighter faded olive
-  constants        = '#6b8289', -- Lighter desaturated teal
-  identifier       = '#b0b0b0', -- Lighter neutral gray
-  special          = '#607386', -- Lighter muted slate blue
-  operators        = '#858585', -- Lighter medium gray
-  comment          = '#516070', -- Lighter dark gray (more visible)
-  subtle_highlight = '#1e2630', -- Lighter subtle highlight
-  error            = '#785258', -- Lighter desaturated dark red
-  warning          = '#736859', -- Lighter desaturated dark amber
-  info             = '#53667a', -- Lighter dark steel blue
-  hint             = '#51604f', -- Lighter dark sage
+  background       = 'NONE',
+  foreground       = '#dddddd', -- light neutral gray
+  statement        = '#64b5f6', -- soft bright blue accent
+  strings          = '#7ca982', -- muted green for strings
+  constants        = '#c49e6c', -- muted orange for constants
+  identifier       = '#dddddd', -- same as foreground
+  special          = '#64b5f6', -- soft bright blue accent
+  operators        = '#64b5f6', -- soft bright blue accent
+  comment          = '#444444', -- dark gray for comments
+  subtle_highlight = '#232136', -- very dark purple for highlights
+  error            = '#b85c5c', -- muted red
+  warning          = '#c49e6c', -- muted orange
+  info             = '#64b5f6', -- soft bright blue accent for info
+  hint             = '#7ca982', -- muted green for hints
 }
 
 vim.cmd('highlight clear')
@@ -31,14 +31,14 @@ vim.api.nvim_set_hl(0, 'Comment', { fg = neurotoxin.palette.comment, italic = tr
 vim.api.nvim_set_hl(0, 'Constant', { fg = neurotoxin.palette.constants })
 vim.api.nvim_set_hl(0, 'String', { fg = neurotoxin.palette.strings })
 vim.api.nvim_set_hl(0, 'Character', { fg = neurotoxin.palette.strings })
-vim.api.nvim_set_hl(0, 'Identifier', { fg = neurotoxin.palette.identifier })
+vim.api.nvim_set_hl(0, 'Identifier', { fg = neurotoxin.palette.foreground })
 vim.api.nvim_set_hl(0, 'Statement', { fg = neurotoxin.palette.statement })
 vim.api.nvim_set_hl(0, 'PreProc', { fg = neurotoxin.palette.special })
 vim.api.nvim_set_hl(0, 'Type', { fg = neurotoxin.palette.special })
 vim.api.nvim_set_hl(0, 'Special', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'Underlined', { fg = neurotoxin.palette.identifier, underline = true })
+vim.api.nvim_set_hl(0, 'Underlined', { fg = neurotoxin.palette.statement, underline = true })
 vim.api.nvim_set_hl(0, 'Error', { fg = neurotoxin.palette.error })
-vim.api.nvim_set_hl(0, 'Todo', { fg = neurotoxin.palette.background, bg = neurotoxin.palette.comment })
+vim.api.nvim_set_hl(0, 'Todo', { fg = neurotoxin.palette.background, bg = neurotoxin.palette.warning })
 
 -- UI Elements
 vim.api.nvim_set_hl(0, 'StatusLine', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.subtle_highlight })
