@@ -1,111 +1,122 @@
-local neurotoxin = {}
-neurotoxin.palette = {
-  background       = 'NONE',
-  foreground       = '#dddddd', -- light neutral gray
-  statement        = '#64b5f6', -- soft bright blue accent
-  strings          = '#7ca982', -- muted green for strings
-  constants        = '#c49e6c', -- muted orange for constants
-  identifier       = '#dddddd', -- same as foreground
-  special          = '#64b5f6', -- soft bright blue accent
-  operators        = '#64b5f6', -- soft bright blue accent
-  comment          = '#444444', -- dark gray for comments
-  subtle_highlight = '#232136', -- very dark purple for highlights
-  error            = '#b85c5c', -- muted red
-  warning          = '#c49e6c', -- muted orange
-  info             = '#64b5f6', -- soft bright blue accent for info
-  hint             = '#7ca982', -- muted green for hints
+-- neurotoxin-base16 (tokyonight-storm vibes, neutral-ish whites)
+local M = {}
+
+-- Base16 slots
+-- 00-07: core (bg..fg), 08-0F: accents
+local base16 = {
+  base00 = "#24283b", -- bg (storm base)
+  base01 = "#1f2335", -- darker bg
+  base02 = "#2f3549", -- selection/cursorline
+  base03 = "#545c7e", -- comments/dim
+  base04 = "#b7bdd6", -- subtle fg (less blue than stock)
+  base05 = "#d7d8e4", -- main fg (neutralized “white”)
+  base06 = "#e6e6ef", -- bright fg
+  base07 = "#f2f2f5", -- near-white
+
+  base08 = "#f7768e", -- red
+  base09 = "#ff9e64", -- orange
+  base0A = "#e0af68", -- yellow
+  base0B = "#9ece6a", -- green
+  base0C = "#73daca", -- cyan/teal
+  base0D = "#7aa2f7", -- blue
+  base0E = "#bb9af7", -- purple
+  base0F = "#c68a75", -- brown/aux
 }
 
-vim.cmd('highlight clear')
-if vim.fn.exists('syntax_on') then
-  vim.cmd('syntax reset')
+-- convenience aliases
+local c = base16
+
+vim.cmd("highlight clear")
+if vim.fn.exists("syntax_on") == 1 then
+  vim.cmd("syntax reset")
 end
 
-vim.o.background = 'dark'
 vim.o.termguicolors = true
-vim.g.colors_name = 'neurotoxin'
+vim.o.background = "dark"
+vim.g.colors_name = "neurotoxin-base16"
 
--- Core Highlights
-vim.api.nvim_set_hl(0, 'Normal', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.background })
-vim.api.nvim_set_hl(0, 'Comment', { fg = neurotoxin.palette.comment, italic = true })
-vim.api.nvim_set_hl(0, 'Constant', { fg = neurotoxin.palette.constants })
-vim.api.nvim_set_hl(0, 'String', { fg = neurotoxin.palette.strings })
-vim.api.nvim_set_hl(0, 'Character', { fg = neurotoxin.palette.strings })
-vim.api.nvim_set_hl(0, 'Identifier', { fg = neurotoxin.palette.foreground })
-vim.api.nvim_set_hl(0, 'Statement', { fg = neurotoxin.palette.statement })
-vim.api.nvim_set_hl(0, 'PreProc', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'Type', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'Special', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'Underlined', { fg = neurotoxin.palette.statement, underline = true })
-vim.api.nvim_set_hl(0, 'Error', { fg = neurotoxin.palette.error })
-vim.api.nvim_set_hl(0, 'Todo', { fg = neurotoxin.palette.background, bg = neurotoxin.palette.warning })
+local function hi(group, opts) vim.api.nvim_set_hl(0, group, opts) end
 
--- UI Elements
-vim.api.nvim_set_hl(0, 'StatusLine', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = neurotoxin.palette.comment, bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'VertSplit', { fg = neurotoxin.palette.subtle_highlight, bg = neurotoxin.palette.background })
-vim.api.nvim_set_hl(0, 'TabLine', { fg = neurotoxin.palette.comment, bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'TabLineFill', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.background })
-vim.api.nvim_set_hl(0, 'TabLineSel', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.background })
+-- Core
+hi("Normal", { fg = c.base05, bg = c.base00 })
+hi("Comment", { fg = c.base03, italic = true })
+hi("Constant", { fg = c.base0A }) -- lean warmer than stock tokyo
+hi("String", { fg = c.base0B })
+hi("Character", { fg = c.base0B })
+hi("Identifier", { fg = c.base05 })
+hi("Statement", { fg = c.base0D })
+hi("PreProc", { fg = c.base0E })
+hi("Type", { fg = c.base0E })
+hi("Special", { fg = c.base0D })
+hi("Underlined", { fg = c.base0D, underline = true })
+hi("Error", { fg = c.base08 })
+hi("Todo", { fg = c.base00, bg = c.base09 })
 
-vim.api.nvim_set_hl(0, 'Title', { fg = neurotoxin.palette.statement })
-vim.api.nvim_set_hl(0, 'LineNr', { fg = neurotoxin.palette.comment })
-vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = neurotoxin.palette.foreground })
-vim.api.nvim_set_hl(0, 'CursorLine', { bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'ColorColumn', { bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'SignColumn', { bg = neurotoxin.palette.background })
-vim.api.nvim_set_hl(0, 'Visual', { bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'VisualNOS', { bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'Pmenu', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'PmenuSel', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'PmenuSbar', { bg = neurotoxin.palette.subtle_highlight })
-vim.api.nvim_set_hl(0, 'PmenuThumb', { bg = neurotoxin.palette.comment })
-vim.api.nvim_set_hl(0, 'WildMenu', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'Folded',
-  { fg = neurotoxin.palette.comment, bg = neurotoxin.palette.subtle_highlight, italic = true })
-vim.api.nvim_set_hl(0, 'FoldColumn', { fg = neurotoxin.palette.comment, bg = neurotoxin.palette.background })
+-- UI
+hi("StatusLine", { fg = c.base05, bg = c.base02 })
+hi("StatusLineNC", { fg = c.base03, bg = c.base02 })
+hi("VertSplit", { fg = c.base02, bg = c.base00 })
+hi("TabLine", { fg = c.base03, bg = c.base02 })
+hi("TabLineFill", { fg = c.base05, bg = c.base00 })
+hi("TabLineSel", { fg = c.base05, bg = c.base00 })
+hi("Title", { fg = c.base0D })
+hi("LineNr", { fg = c.base03 })
+hi("CursorLineNr", { fg = c.base05 })
+hi("CursorLine", { bg = c.base02 })
+hi("ColorColumn", { bg = c.base02 })
+hi("SignColumn", { bg = c.base00 })
+hi("Visual", { bg = c.base02 })
+hi("VisualNOS", { bg = c.base02 })
+hi("Pmenu", { fg = c.base05, bg = c.base02 })
+hi("PmenuSel", { fg = c.base07, bg = c.base0D })
+hi("PmenuSbar", { bg = c.base02 })
+hi("PmenuThumb", { bg = c.base03 })
+hi("WildMenu", { fg = c.base07, bg = c.base0D })
+hi("Folded", { fg = c.base03, bg = c.base02, italic = true })
+hi("FoldColumn", { fg = c.base03, bg = c.base00 })
+hi("SpecialKey", { fg = c.base0D })
+hi("NonText", { fg = c.base03 })
+hi("MatchParen", { fg = c.base07, bg = c.base03 })
+hi("Conceal", { fg = c.base03 })
+hi("Directory", { fg = c.base0D })
+hi("Search", { fg = c.base00, bg = c.base0A })
+hi("IncSearch", { fg = c.base00, bg = c.base0D })
 
-vim.api.nvim_set_hl(0, 'SpecialKey', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'NonText', { fg = neurotoxin.palette.comment })
-vim.api.nvim_set_hl(0, 'MatchParen', { fg = neurotoxin.palette.foreground, bg = neurotoxin.palette.comment })
-vim.api.nvim_set_hl(0, 'Conceal', { fg = neurotoxin.palette.comment })
-vim.api.nvim_set_hl(0, 'Directory', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, 'Search', { fg = neurotoxin.palette.background, bg = neurotoxin.palette.constants })
-vim.api.nvim_set_hl(0, 'IncSearch', { fg = neurotoxin.palette.background, bg = neurotoxin.palette.special })
+-- Diagnostics (LSP)
+hi("DiagnosticError", { fg = c.base08 })
+hi("DiagnosticWarn", { fg = c.base09 })
+hi("DiagnosticInfo", { fg = c.base0D })
+hi("DiagnosticHint", { fg = c.base0C })
+hi("DiagnosticUnderlineError", { sp = c.base08, undercurl = true })
+hi("DiagnosticUnderlineWarn", { sp = c.base09, undercurl = true })
+hi("DiagnosticUnderlineInfo", { sp = c.base0D, undercurl = true })
+hi("DiagnosticUnderlineHint", { sp = c.base0C, undercurl = true })
 
--- Diagnostics
-vim.api.nvim_set_hl(0, 'DiagnosticError', { fg = neurotoxin.palette.error })
-vim.api.nvim_set_hl(0, 'DiagnosticWarn', { fg = neurotoxin.palette.warning })
-vim.api.nvim_set_hl(0, 'DiagnosticInfo', { fg = neurotoxin.palette.info })
-vim.api.nvim_set_hl(0, 'DiagnosticHint', { fg = neurotoxin.palette.hint })
-vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { sp = neurotoxin.palette.error, undercurl = true })
-vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { sp = neurotoxin.palette.warning, undercurl = true })
-vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { sp = neurotoxin.palette.info, undercurl = true })
-vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { sp = neurotoxin.palette.hint, undercurl = true })
+-- Treesitter
+hi("@comment", { link = "Comment" })
+hi("@constant", { fg = c.base0A })
+hi("@constant.builtin", { fg = c.base0A })
+hi("@string", { link = "String" })
+hi("@variable", { fg = c.base05 })
+hi("@function", { fg = c.base05 })
+hi("@function.builtin", { fg = c.base0E })
+hi("@function.macro", { fg = c.base0E })
+hi("@keyword", { fg = c.base0D })
+hi("@keyword.function", { fg = c.base0D })
+hi("@keyword.operator", { fg = c.base0D })
+hi("@keyword.return", { fg = c.base0D })
+hi("@type", { fg = c.base0E })
+hi("@type.builtin", { fg = c.base0E })
+hi("@operator", { fg = c.base0D })
+hi("@number", { fg = c.base09 }) -- numbers pop a tad warmer
+hi("@boolean", { fg = c.base09 })
+hi("@property", { fg = c.base05 })
+hi("@punctuation.delimiter", { fg = c.base0D })
+hi("@punctuation.bracket", { fg = c.base0D })
+hi("@tag", { fg = c.base0D })
+hi("@tag.attribute", { fg = c.base05 })
+hi("@text", { fg = c.base05 })
 
--- Tree-sitter Highlights
-vim.api.nvim_set_hl(0, '@comment', { link = 'Comment' })
-vim.api.nvim_set_hl(0, '@constant', { link = 'Constant' })
-vim.api.nvim_set_hl(0, '@constant.builtin', { fg = neurotoxin.palette.constants })
-vim.api.nvim_set_hl(0, '@string', { link = 'String' })
-vim.api.nvim_set_hl(0, '@variable', { fg = neurotoxin.palette.foreground })
-vim.api.nvim_set_hl(0, '@function', { fg = neurotoxin.palette.identifier })
-vim.api.nvim_set_hl(0, '@function.builtin', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, '@function.macro', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, '@keyword', { fg = neurotoxin.palette.statement })
-vim.api.nvim_set_hl(0, '@keyword.function', { fg = neurotoxin.palette.statement })
-vim.api.nvim_set_hl(0, '@keyword.operator', { fg = neurotoxin.palette.operators })
-vim.api.nvim_set_hl(0, '@keyword.return', { fg = neurotoxin.palette.statement })
-vim.api.nvim_set_hl(0, '@type', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, '@type.builtin', { fg = neurotoxin.palette.special })
-vim.api.nvim_set_hl(0, '@operator', { fg = neurotoxin.palette.operators })
-vim.api.nvim_set_hl(0, '@number', { fg = neurotoxin.palette.constants })
-vim.api.nvim_set_hl(0, '@boolean', { fg = neurotoxin.palette.constants })
-vim.api.nvim_set_hl(0, '@property', { fg = neurotoxin.palette.identifier })
-vim.api.nvim_set_hl(0, '@punctuation.delimiter', { fg = neurotoxin.palette.operators })
-vim.api.nvim_set_hl(0, '@punctuation.bracket', { fg = neurotoxin.palette.operators })
-vim.api.nvim_set_hl(0, '@tag', { fg = neurotoxin.palette.statement })
-vim.api.nvim_set_hl(0, '@tag.attribute', { fg = neurotoxin.palette.identifier })
-vim.api.nvim_set_hl(0, '@text', { fg = neurotoxin.palette.foreground })
-
-return neurotoxin
+-- Optional: export palette if you want to reuse it
+M.palette = base16
+return M
