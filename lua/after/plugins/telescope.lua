@@ -19,57 +19,57 @@ return {
       },
     },
     config = function()
-      local japanese_titles = {
-        find_files = "ファイル検索 【サイバー探索】",
-        git_files = "Git ファイル 【リポジトリ】",
-        buffers = "バッファ 【メモリ状態】",
-        oldfiles = "履歴 【アクセス記録】",
-        live_grep = "ライブ検索 【リアルタイム解析】",
-        grep_string = "文字列検索 【ハッキング】",
-        help_tags = "ヘルプ 【支援データベース】",
-        current_buffer_fuzzy_find = "バッファ内検索 【局所スキャン】",
-        lsp_references = "参照先 【コード接続】",
-        lsp_document_symbols = "ドキュメント記号 【構造解析】",
-        diagnostics = "診断 【エラー解析】",
-        commands = "コマンド 【システム命令】",
-        man_pages = "マニュアル 【説明書】",
-        marks = "マーク 【位置標識】",
-        colorscheme = "カラースキーム 【視覚設定】",
-        quickfix = "クイックフィックス 【修正リスト】",
-        loclist = "位置リスト 【場所一覧】",
-        jumplist = "ジャンプリスト 【移動履歴】",
-        vim_options = "Vim設定 【構成オプション】",
-        registers = "レジスタ 【クリップボード】",
-        autocommands = "自動コマンド 【トリガー設定】",
-        spell_suggest = "スペル候補 【修正提案】",
-        keymaps = "キー設定 【操作割当】",
-        filetypes = "ファイルタイプ 【種別設定】",
-        highlights = "ハイライト 【色彩設定】",
-        git_commits = "Gitコミット 【変更履歴】",
-        git_bcommits = "バッファコミット 【ファイル履歴】",
-        git_branches = "Gitブランチ 【分岐一覧】",
-        git_status = "Git状態 【変更状況】",
-        git_stash = "Gitスタッシュ 【一時保存】",
-        results = "検索結果",
-        select = "選択",
-        paste = "貼り付け",
-        delete = "削除",
-        rename = "名前変更",
-        create = "作成",
-        update = "更新",
-        search = "検索",
-        filter = "フィルター",
-        preview = "プレビュー",
+      local info_titles = {
+        find_files = "Find Files",
+        git_files = "Git Files",
+        buffers = "Buffers",
+        oldfiles = "History",
+        live_grep = "Live Grep",
+        grep_string = "Grep String",
+        help_tags = "Help",
+        current_buffer_fuzzy_find = "Fuzzy Find (Buffer)",
+        lsp_references = "References",
+        lsp_document_symbols = "Document Symbols",
+        diagnostics = "Diagnostics",
+        commands = "Commands",
+        man_pages = "Man Pages",
+        marks = "Marks",
+        colorscheme = "Colorscheme",
+        quickfix = "Quickfix",
+        loclist = "Location List",
+        jumplist = "Jump List",
+        vim_options = "Vim Options",
+        registers = "Registers",
+        autocommands = "Autocommands",
+        spell_suggest = "Spell Suggest",
+        keymaps = "Keymaps",
+        filetypes = "Filetypes",
+        highlights = "Highlights",
+        git_commits = "Git Commits",
+        git_bcommits = "Buffer Commits",
+        git_branches = "Git Branches",
+        git_status = "Git Status",
+        git_stash = "Git Stash",
+        results = "Results",
+        select = "Select",
+        paste = "Paste",
+        delete = "Delete",
+        rename = "Rename",
+        create = "Create",
+        update = "Update",
+        search = "Search",
+        filter = "Filter",
+        preview = "Preview",
       }
 
       require("telescope").setup({
         defaults = {
-          prompt_prefix = "❮ サイバー ❯ ",
-          selection_caret = "» ",
+          prompt_prefix = "> ",
+          selection_caret = "> ",
           entry_prefix = "  ",
-          multi_icon = "• ",
+          multi_icon = "+ ",
 
-          results_title = japanese_titles.results,
+          results_title = info_titles.results,
 
           -- Key additions for gitignore support
           file_ignore_patterns = {
@@ -177,8 +177,8 @@ return {
 
         pickers = {
           find_files = {
-            prompt_title = japanese_titles.find_files,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.find_files,
+            results_title = info_titles.results,
             previewer = true,
             -- Use fd if available (better gitignore support)
             find_command = vim.fn.executable("fd") == 1 and {
@@ -192,58 +192,58 @@ return {
             } or nil,
           },
           git_files = {
-            prompt_title = japanese_titles.git_files,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.git_files,
+            results_title = info_titles.results,
             previewer = true,
             -- git_files automatically respects gitignore
             show_untracked = true,
             recurse_submodules = false,
           },
           grep_string = {
-            prompt_title = japanese_titles.grep_string,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.grep_string,
+            results_title = info_titles.results,
             previewer = true,
             additional_args = { "--hidden", "--respect-gitignore" },
           },
           live_grep = {
-            prompt_title = japanese_titles.live_grep,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.live_grep,
+            results_title = info_titles.results,
             previewer = true,
             additional_args = { "--hidden", "--respect-gitignore" },
           },
           buffers = {
-            prompt_title = japanese_titles.buffers,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.buffers,
+            results_title = info_titles.results,
             previewer = true,
           },
           help_tags = {
-            prompt_title = japanese_titles.help_tags,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.help_tags,
+            results_title = info_titles.results,
             previewer = true,
           },
           oldfiles = {
-            prompt_title = japanese_titles.oldfiles,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.oldfiles,
+            results_title = info_titles.results,
             previewer = true,
           },
           current_buffer_fuzzy_find = {
-            prompt_title = japanese_titles.current_buffer_fuzzy_find,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.current_buffer_fuzzy_find,
+            results_title = info_titles.results,
             previewer = true,
           },
           lsp_references = {
-            prompt_title = japanese_titles.lsp_references,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.lsp_references,
+            results_title = info_titles.results,
             previewer = true,
           },
           diagnostics = {
-            prompt_title = japanese_titles.diagnostics,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.diagnostics,
+            results_title = info_titles.results,
             previewer = true,
           },
           commands = {
-            prompt_title = japanese_titles.commands,
-            results_title = japanese_titles.results,
+            prompt_title = info_titles.commands,
+            results_title = info_titles.results,
             previewer = true,
           },
         },
@@ -251,8 +251,8 @@ return {
         extensions = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({
-              prompt_title = "【選択メニュー】",
-              results_title = "選択オプション",
+              prompt_title = "Select Menu",
+              results_title = "Options",
               layout_config = {
                 width = 0.65,
                 height = 0.6,
@@ -279,11 +279,11 @@ return {
         original_builtin[k] = v
         builtin[k] = function(opts)
           opts = opts or {}
-          if japanese_titles[k] and not opts.prompt_title then
-            opts.prompt_title = japanese_titles[k]
+          if info_titles[k] and not opts.prompt_title then
+            opts.prompt_title = info_titles[k]
           end
           if not opts.results_title then
-            opts.results_title = japanese_titles.results
+            opts.results_title = info_titles.results
           end
           if opts.previewer == nil then
             opts.previewer = true
@@ -292,85 +292,74 @@ return {
         end
       end
 
-      -- Enhanced keymaps with better gitignore support
+      -- Keymaps with clean, informational descriptions
       vim.keymap.set("n", "<leader>pf", function()
-        -- Try git_files first (if in git repo), fallback to find_files
         local function is_git_repo()
           vim.fn.system("git rev-parse --is-inside-work-tree")
           return vim.v.shell_error == 0
         end
-
         if is_git_repo() then
           builtin.git_files()
         else
           builtin.find_files()
         end
-      end, { desc = "⌘ 【探索】ファイル検索" })
+      end, { desc = "Find Files" })
 
-      vim.keymap.set("n", "<leader>pF", builtin.find_files, { desc = "⌘ 【全探索】全ファイル検索" })
-
-      vim.keymap.set("n", "<leader>ca", function()
-        vim.lsp.buf.code_action()
-      end, { desc = "🛠 【修正】コードアクション" })
-
+      vim.keymap.set("n", "<leader>pF", builtin.find_files, { desc = "Find All Files" })
+      vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, { desc = "Code Action" })
       vim.keymap.set("n", "<leader>/", function()
         builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
           winblend = 15,
           previewer = false,
         }))
-      end, { desc = "🔍 【バッファ内】検索" })
-
+      end, { desc = "Fuzzy Find (Buffer)" })
       vim.keymap.set("n", "<leader>l", function()
         builtin.live_grep({
           grep_open_files = true,
           additional_args = { "--hidden", "--respect-gitignore" },
         })
-      end, { desc = "🔎 【全文】ライブグレップ" })
-
+      end, { desc = "Live Grep (Open Files)" })
       vim.keymap.set("n", "<leader>L", function()
         builtin.live_grep({
           additional_args = { "--hidden", "--respect-gitignore" },
         })
-      end, { desc = "🔎 【全プロジェクト】ライブグレップ" })
-
-      vim.keymap.set("n", "<leader>?", builtin.oldfiles, { desc = "📜 【履歴】最近開いたファイル" })
-      vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "📋 【メモリ】バッファリスト" })
+      end, { desc = "Live Grep (Project)" })
+      vim.keymap.set("n", "<leader>?", builtin.oldfiles, { desc = "History" })
+      vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Buffers" })
 
       local has_telescope = pcall(require, "telescope")
       if has_telescope then
         local actions = require("telescope.actions")
-        local action_state = require("telescope.actions.state")
         local pickers = require("telescope.pickers")
         local finders = require("telescope.finders")
         local sorters = require("telescope.sorters")
-        local themes = require("telescope.themes")
 
-        local japanese_help = function(opts)
+        local info_help = function(opts)
           opts = opts or {}
           local help_items = {
-            { key = "j/k", desc = "選択を上下に移動" },
-            { key = "<Down>/<Up>", desc = "選択を上下に移動" },
-            { key = "<CR>", desc = "選択項目を開く" },
-            { key = "<C-x>", desc = "水平分割で開く" },
-            { key = "<C-v>", desc = "垂直分割で開く" },
-            { key = "<C-t>", desc = "新しいタブで開く" },
-            { key = "<C-u>/<C-d>", desc = "プレビュー画面をスクロール" },
-            { key = "<C-n>/<C-p>", desc = "履歴を移動" },
-            { key = "<Tab>", desc = "複数選択を追加" },
-            { key = "<C-q>", desc = "選択をQuickfixに送信" },
-            { key = "<Esc>", desc = "検索を終了" },
-            { key = "<C-c>", desc = "検索を終了" },
-            { key = "?", desc = "キーマップヘルプを表示" },
+            { key = "j/k",         desc = "Move selection up/down" },
+            { key = "<Down>/<Up>", desc = "Move selection up/down" },
+            { key = "<CR>",        desc = "Open selected item" },
+            { key = "<C-x>",       desc = "Open in horizontal split" },
+            { key = "<C-v>",       desc = "Open in vertical split" },
+            { key = "<C-t>",       desc = "Open in new tab" },
+            { key = "<C-u>/<C-d>", desc = "Scroll preview window" },
+            { key = "<C-n>/<C-p>", desc = "Cycle history" },
+            { key = "<Tab>",       desc = "Add to multi-select" },
+            { key = "<C-q>",       desc = "Send to Quickfix" },
+            { key = "<Esc>",       desc = "Close search" },
+            { key = "<C-c>",       desc = "Close search" },
+            { key = "?",           desc = "Show keymap help" },
           }
 
           pickers.new(opts, {
-            prompt_title = "🔰 テレスコープ【ヘルプ】",
+            prompt_title = "Telescope Help",
             finder = finders.new_table {
               results = help_items,
               entry_maker = function(entry)
                 return {
                   value = entry,
-                  display = entry.key .. " ➜ " .. entry.desc,
+                  display = entry.key .. " -> " .. entry.desc,
                   ordinal = entry.key .. " " .. entry.desc,
                 }
               end,
@@ -385,13 +374,13 @@ return {
           }):find()
         end
 
-        builtin.japanese_help = japanese_help
-        vim.keymap.set("n", "<leader>fh", builtin.japanese_help, { desc = "？【ヘルプ】テレスコープ" })
+        builtin.info_help = info_help
+        vim.keymap.set("n", "<leader>fh", builtin.info_help, { desc = "Telescope Help" })
       end
 
       vim.defer_fn(function()
-        vim.notify("テレスコープ：日本語サイバーモード有効化 + Gitignore対応", vim.log.levels.INFO, {
-          title = "【システム】",
+        vim.notify("Telescope: Informational mode enabled + gitignore support", vim.log.levels.INFO, {
+          title = "[System]",
         })
       end, 800)
     end,

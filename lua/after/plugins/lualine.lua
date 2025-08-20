@@ -1,7 +1,7 @@
 return {
   {
     'nvim-lualine/lualine.nvim',
-    enabled = false,
+    enabled = true,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       -- Custom component for macro recording
@@ -10,14 +10,14 @@ return {
         if recording_register == "" then
           return ""
         else
-          return "記録中 @" .. recording_register -- "Recording @" in Japanese
+          return "Recording @" .. recording_register
         end
       end
 
       require('lualine').setup {
         options = {
           icons_enabled = true,
-          theme = 'auto',
+          theme = 'tokyonight',
           component_separators = { left = '|', right = '|' },
           section_separators = { right = '', left = '' },
           globalstatus = true,
@@ -28,9 +28,6 @@ return {
             {
               'mode',
               icon = '',
-              fmt = function(str)
-                return '作戦 ' .. str
-              end,
             }
           },
           lualine_b = {
@@ -45,7 +42,7 @@ return {
             -- Add macro recording indicator here
             {
               macro_recording,
-              color = { fg = '#f7768e', gui = 'bold' }, -- Tokyo Night red, bold text
+              color = { fg = '#f7768e', gui = 'bold' },
             }
           },
           lualine_c = {
@@ -59,13 +56,13 @@ return {
           lualine_y = {
             {
               'progress',
-              icon = '進捗' -- "Progress"
+              icon = '', -- Remove Japanese icon
             }
           },
           lualine_z = {
             {
               'location',
-              icon = '座標' -- "Coordinates"
+              icon = '', -- Remove Japanese icon
             }
           }
         },
