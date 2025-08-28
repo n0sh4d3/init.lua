@@ -92,25 +92,30 @@ return {
             vim.opt.more = false
             vim.opt.shortmess:append("FWIc")
 
-
-            -- diagnostics tidy
+            -- diagnostics tidy - DISABLE ALL VISUAL INDICATORS
             vim.diagnostic.config({
-                virtual_text = false,
-                signs = true,
-                underline = true,
-                update_in_insert = false,
+                virtual_text = true, -- No inline text
+                signs = true,        -- No gutter signs
+                underline = true,    -- No underlines
+                update_in_insert = true,
                 severity_sort = true,
-                float = { border = "rounded", source = "if_many", focusable = false },
+                -- float = {
+                --     border = "rounded",
+                --     source = "if_many",
+                --     focusable = false,
+                --     style = "minimal", -- Consistent with telescope
+                --     header = "",       -- Clean header
+                -- },
             })
+
+            -- Automatically close diagnostic lists when diagnostics change
             vim.api.nvim_create_autocmd("DiagnosticChanged", {
                 callback = function()
                     local ll = vim.fn.getloclist(0, { winid = 1 }); if ll and ll.winid and ll.winid ~= 0 then
-                        vim.cmd(
-                            "lclose")
+                        vim.cmd("lclose")
                     end
                     local qf = vim.fn.getqflist({ winid = 1 }); if qf and qf.winid and qf.winid ~= 0 then
-                        vim.cmd(
-                            "cclose")
+                        vim.cmd("cclose")
                     end
                 end,
             })
@@ -136,20 +141,20 @@ return {
                     map("<leader>gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
                     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction (Telescope)")
 
+                    -- diagnostics with telescope-style picker
+                    map("<leader>q", function()
+                        require("telescope.builtin").diagnostics({
+                            bufnr = 0,
+                            severity_limit = vim.diagnostic.severity.HINT,
+                        })
+                    end, "Show diagnostic [E]rror messages (Telescope)")
+
                     -- signatures (manual only)
                     vim.keymap.set({ "i", "n" }, "<C-s>", vim.lsp.buf.signature_help,
                         { buffer = event.buf, desc = "LSP: Signature Help" })
 
-                    -- highlights
-                    local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    if client and client.server_capabilities.documentHighlightProvider then
-                        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                            buffer = event.buf, callback = vim.lsp.buf.document_highlight,
-                        })
-                        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-                            buffer = event.buf, callback = vim.lsp.buf.clear_references,
-                        })
-                    end
+                    -- NO document highlights to keep buffer clean
+                    -- Removed the document highlight autocmds
 
                     -- Enable inlay hints only for Go (gopls) for consistency
                     local c = vim.lsp.get_client_by_id(event.data.client_id)
