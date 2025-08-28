@@ -1,41 +1,15 @@
 require("lazy").setup({
     spec = {
-        {
-            import = "after.plugins",
-        },
+        { import = "after.plugins" },
     },
     change_detection = {
         enable = false,
-        notify = true,
+        notify = false,
     },
-    install = {
-        missing = true,
-        colorscheme = { "tokyonight" } -- Changed to a more cyber theme name
-    },
-    ui = {
-        size = { width = 0.75, height = 0.75 },
-        wrap = true,
-        backdrop = 80,
-        border = "rounded",
-        title = " 影無し - n0_sh4d3 ",
-        title_pos = "center",
-        icons = {
-            cmd = "⌘",
-            config = "零", -- "Zero" kanji
-            event = "イ",
-            ft = "書", -- "Document" kanji
-            init = "起", -- "Start" kanji
-            keys = "鍵", -- "Key" kanji
-            plugin = "電", -- "Electric" kanji
-            runtime = "実", -- "Reality" kanji
-            source = "源", -- "Source" kanji
-            start = "動", -- "Move" kanji
-            task = "務", -- "Task" kanji
-        },
-
-    },
+    checker = { enabled = false },
+    concurrency = 2,
     performance = {
-        cache = { enabled = true, },
+        cache = { enabled = true },
         reset_packpath = true,
         rtp = {
             disabled_plugins = {
@@ -48,6 +22,7 @@ require("lazy").setup({
                 "gzip",
                 "logipat",
                 "matchit",
+                "matchparen",
                 "optwin",
                 "rplugin",
                 "rrhelper",
@@ -62,7 +37,11 @@ require("lazy").setup({
                 "vimballPlugin",
                 "zip",
                 "zipPlugin",
+                -- "netrwPlugin",
+                -- "netrwSettings",
+                -- "netrwFileHandlers",
             },
         },
     },
 })
+

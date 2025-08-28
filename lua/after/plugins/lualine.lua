@@ -10,7 +10,7 @@ return {
         if recording_register == "" then
           return ""
         else
-          return "Recording @" .. recording_register
+          return "󰑋 @" .. recording_register -- futuristic macro icon
         end
       end
 
@@ -18,8 +18,8 @@ return {
         options = {
           icons_enabled = true,
           theme = 'tokyonight',
-          component_separators = { left = '|', right = '|' },
-          section_separators = { right = '', left = '' },
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
           globalstatus = true,
           always_divide_middle = true,
         },
@@ -27,47 +27,81 @@ return {
           lualine_a = {
             {
               'mode',
-              icon = '',
+              color = { fg = '#7dcfff', bg = '#1a1b26', gui = 'bold' }, -- more vibrant blue
+              separator = { left = '', right = '' },
             }
           },
           lualine_b = {
             {
               'branch',
-              icon = ''
+              icon = '',
+              color = { fg = '#bb9af7', gui = 'bold' },
             },
             {
               'diff',
-              symbols = { added = '+', modified = '~', removed = '-' },
+              symbols = { added = ' ', modified = ' ', removed = ' ' },
+              color = { fg = '#e0af68' },
             },
-            -- Add macro recording indicator here
             {
               macro_recording,
-              color = { fg = '#f7768e', gui = 'bold' },
+              color = { fg = '#ff007c', bg = '#1a1b26', gui = 'bold,italic' }, -- hot pink for macro
             }
           },
           lualine_c = {
-            'filename'
+            {
+              'diagnostics',
+              sources = { 'nvim_lsp' },
+              symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
+              color = { fg = '#e0af68' },
+            },
+            {
+              'filename',
+              path = 1,
+              color = { fg = '#c0caf5', gui = 'bold' },
+            }
           },
           lualine_x = {
-            'encoding',
-            'fileformat',
-            'filetype'
+            {
+              'fileformat',
+              icons_enabled = true,
+              color = { fg = '#7dcfff' },
+            },
+            {
+              'filetype',
+              icon_only = true,
+              color = { fg = '#ff9e64' },
+            }
           },
           lualine_y = {
             {
               'progress',
-              icon = '', -- Remove Japanese icon
+              icon = '',
+              color = { fg = '#f7768e', gui = 'bold' },
             }
           },
           lualine_z = {
             {
               'location',
-              icon = '', -- Remove Japanese icon
+              icon = '',
+              color = { fg = '#1a1b26', gui = 'bold', bg = '#7aa2f7' },
+              separator = { left = '', right = '' },
             }
           }
         },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { { 'filename', separator = { left = '', right = '' } } },
+          lualine_x = { { 'location', separator = { left = '', right = '' } } },
+          lualine_y = {},
+          lualine_z = {}
+        },
+        tabline = {},
+        winbar = {},
         extensions = { 'nvim-tree', 'toggleterm', 'quickfix' }
       }
+      -- Fix signcolumn so line numbers never move
+      vim.opt.signcolumn = "yes:2"
     end
   }
 }

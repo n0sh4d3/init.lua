@@ -1,7 +1,8 @@
 vim.opt.termguicolors = true
-vim.cmd("set nohlsearch")
-vim.g.have_nerd_font = false
-vim.opt.guicursor = ""
+vim.opt.lazyredraw = true
+vim.opt.ttyfast = true
+vim.g.have_nerd_font = true
+vim.opt.guicursor = "n-v-c:block"
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 4
@@ -12,17 +13,15 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
+vim.opt.undofile = false
 vim.opt.hlsearch = false
-vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
-vim.opt.tabstop = 4
-vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
-vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80" -- this is this fucking line
+vim.opt.signcolumn = "yes:2"
+vim.opt.updatetime = 10
+vim.opt.colorcolumn = "80"
 vim.opt.shortmess:append("sI")
+vim.opt.pumblend = 0
+vim.opt.winblend = 0
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -33,6 +32,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-	border = "single",
+	border = "rounded", -- modern border
 })
-vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkwait300-blinkon200-blinkoff150"

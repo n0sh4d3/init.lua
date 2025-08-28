@@ -1,10 +1,15 @@
 return {
 	"lukas-reineke/indent-blankline.nvim",
-	event = "BufEnter *.*",
+	event = "VeryLazy",
 	main = "ibl",
 	opts = {
 		indent = {
-			char = "│",
+			char = "▏",
+		},
+		scope = {
+			enabled = true,
+			show_start = false,
+			show_end = false,
 		},
 	},
 }
