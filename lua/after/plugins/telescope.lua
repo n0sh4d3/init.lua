@@ -57,7 +57,7 @@ return {
             prompt_position = "top",
             width           = 0.90, -- smaller overall width
             height          = 0.80, -- smaller height
-            preview_width   = 0.60,
+            preview_width   = 0.35,
             preview_cutoff  = 1,    -- 👈 never auto-hide preview
           },
           winblend             = 0,

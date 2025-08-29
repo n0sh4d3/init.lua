@@ -1,4 +1,41 @@
 return {
+    -- =================== UI POPUPS FOR RENAME/SELECT ===================
+    {
+        "stevearc/dressing.nvim",
+        event = "VeryLazy",
+        opts = {
+            input = {
+                enabled = true,
+                border = "none", -- ❌ remove border, like cmp
+                relative = "cursor",
+                prefer_width = 40,
+                win_options = {
+                    -- Reuse the same highlights as cmp/lsp menus
+                    winblend = 0,
+                    winhighlight = table.concat({
+                        "Normal:Pmenu",      -- same bg as cmp popup
+                        "FloatBorder:Pmenu", -- border hidden anyway
+                        "CursorLine:PmenuSel",
+                        "Search:None",
+                    }, ","),
+                },
+            },
+            select = {
+                enabled = true,
+                backend = { "telescope", "builtin" },
+                builtin = {
+                    border = "none",
+                    win_options = {
+                        winblend = 0,
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+                    },
+                },
+                telescope = require("telescope.themes").get_dropdown({}),
+            },
+        },
+    },
+
+
     -- =================== COMPLETION ===================
     {
         "hrsh7th/nvim-cmp",
@@ -170,6 +207,22 @@ return {
                             severity_limit = vim.diagnostic.severity.HINT,
                         })
                     end, "Show diagnostic messages")
+
+                    map("<leader>a", function()
+                        vim.diagnostic.open_float({
+                            bufnr = 0,
+                            scope = "line", -- 👈 Works anywhere on the line with error
+                            focusable = true,
+                            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                            -- border = "single", -- 👈 Same as LSP hover
+                            source = true, -- 👈 Clean like LSP hover
+                            prefix = "",   -- 👈 No prefix like LSP hover
+                            header = "",   -- 👈 No header like LSP hover
+                            format = function(diagnostic)
+                                return diagnostic.message
+                            end,
+                        })
+                    end, "Show full diagnostic message")
 
                     -- signatures (manual only)
                     vim.keymap.set({ "i", "n" }, "<C-s>", vim.lsp.buf.signature_help,
