@@ -30,7 +30,23 @@ return {
                         winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
                     },
                 },
-                telescope = require("telescope.themes").get_dropdown({}),
+                -- FIX: Use centered layout like main telescope pickers
+                telescope = {
+                    border = false,
+                    borderchars = { "", "", "", "", "", "", "", "" },
+                    winblend = 0,
+                    prompt_title = false,
+                    results_title = false,
+                    preview_title = false,
+                    previewer = false,
+                    sorting_strategy = "ascending",
+                    layout_strategy = "horizontal",
+                    layout_config = {
+                        width = 0.6,       -- bigger and centered
+                        height = 0.4,      -- taller
+                        preview_width = 0, -- no preview needed
+                    },
+                },
             },
         },
     },
