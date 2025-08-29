@@ -74,7 +74,7 @@ return {
         end,
     },
 
-    -- =================== LSP CORE (with Telescope ui-select) ===================
+    -- =================== LSP CORE (COMPLETELY SILENT) ===================
     {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
@@ -88,37 +88,59 @@ return {
             "nvim-telescope/telescope-ui-select.nvim",
         },
         config = function()
-            -- never pause on long messages
+            -- COMPLETE MESSAGE SUPPRESSION
             vim.opt.more = false
-            vim.opt.shortmess:append("FWIc")
+            vim.opt.shortmess:append("FWIcaATI")
 
-            -- diagnostics tidy - DISABLE ALL VISUAL INDICATORS
+            -- DISABLE ALL LSP LOGGING
+            vim.lsp.set_log_level("OFF")
+
+            -- COMPLETE DIAGNOSTIC SUPPRESSION
             vim.diagnostic.config({
-                virtual_text = true, -- No inline text
-                signs = true,        -- No gutter signs
-                underline = true,    -- No underlines
-                update_in_insert = true,
-                severity_sort = true,
-                -- float = {
-                --     border = "rounded",
-                --     source = "if_many",
-                --     focusable = false,
-                --     style = "minimal", -- Consistent with telescope
-                --     header = "",       -- Clean header
-                -- },
+                virtual_text = true, -- NO inline diagnostic text
+                signs = true,        -- NO gutter signs
+                underline = true,    -- NO underlines
+                update_in_insert = false,
+                severity_sort = false,
+                float = false, -- NO floating diagnostic windows
             })
 
-            -- Automatically close diagnostic lists when diagnostics change
-            vim.api.nvim_create_autocmd("DiagnosticChanged", {
+            -- SUPPRESS ALL NOTIFICATIONS
+            local original_notify = vim.notify
+            vim.notify = function(msg, level, opts)
+                -- Block ALL LSP-related messages
+                if msg and (
+                        string.find(msg, "LSP") or
+                        string.find(msg, "gopls") or
+                        string.find(msg, "RPC") or
+                        string.find(msg, "expected") or
+                        string.find(msg, "Error") or
+                        string.find(msg, "code_name") or
+                        string.find(msg, "diagnostic") or
+                        string.find(msg, "rust") or
+                        string.find(msg, "clangd") or
+                        string.find(msg, "pyright")
+                    ) then
+                    return -- BLOCK IT
+                end
+                return original_notify(msg, level, opts)
+            end
+
+            -- Only close quickfix/loclist windows if they're diagnostic-related
+            vim.api.nvim_create_autocmd("BufWinEnter", {
                 callback = function()
-                    local ll = vim.fn.getloclist(0, { winid = 1 }); if ll and ll.winid and ll.winid ~= 0 then
-                        vim.cmd("lclose")
-                    end
-                    local qf = vim.fn.getqflist({ winid = 1 }); if qf and qf.winid and qf.winid ~= 0 then
-                        vim.cmd("cclose")
+                    local buf = vim.api.nvim_get_current_buf()
+                    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+                    if ft == "qf" then
+                        vim.schedule(function()
+                            pcall(vim.cmd, "close")
+                        end)
                     end
                 end,
             })
+
+            -- SILENT MESSAGE HANDLER
+            local function silent_handler() end
 
             -- attach goodies
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -141,30 +163,20 @@ return {
                     map("<leader>gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
                     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction (Telescope)")
 
-                    -- diagnostics with telescope-style picker
+                    -- diagnostics with telescope (clean config)
                     map("<leader>q", function()
                         require("telescope.builtin").diagnostics({
                             bufnr = 0,
                             severity_limit = vim.diagnostic.severity.HINT,
                         })
-                    end, "Show diagnostic [E]rror messages (Telescope)")
+                    end, "Show diagnostic messages")
 
                     -- signatures (manual only)
                     vim.keymap.set({ "i", "n" }, "<C-s>", vim.lsp.buf.signature_help,
                         { buffer = event.buf, desc = "LSP: Signature Help" })
 
-                    -- NO document highlights to keep buffer clean
-                    -- Removed the document highlight autocmds
-
-                    -- Enable inlay hints only for Go (gopls) for consistency
-                    local c = vim.lsp.get_client_by_id(event.data.client_id)
-                    if c and c.name == "gopls" and c.server_capabilities.inlayHintProvider then
-                        if vim.lsp.inlay_hint and vim.lsp.inlay_hint.enable then
-                            pcall(vim.lsp.inlay_hint.enable, true, { bufnr = event.buf })
-                        elseif vim.lsp.inlay_hint then
-                            pcall(vim.lsp.inlay_hint, event.buf, true)
-                        end
-                    end
+                    -- NO inlay hints for ANYONE - they cause messages
+                    -- Completely removed inlay hint code
                 end,
             })
 
@@ -175,31 +187,36 @@ return {
                 require("cmp_nvim_lsp").default_capabilities()
             )
 
-            -- servers with consistent inlay hint settings
+            -- servers with COMPLETE MESSAGE SUPPRESSION
             local servers = {
                 gopls         = {
                     cmd = { "gopls" },
                     handlers = {
-                        ["window/showMessage"] = function() end,
-                        ["window/logMessage"]  = function() end,
-                        ["$/logTrace"]         = function() end,
+                        -- BLOCK ALL MESSAGE TYPES
+                        ["window/showMessage"] = silent_handler,
+                        ["window/logMessage"] = silent_handler,
+                        ["window/showMessageRequest"] = silent_handler,
+                        ["$/logTrace"] = silent_handler,
+                        ["$/progress"] = silent_handler,
+                        ["textDocument/publishDiagnostics"] = silent_handler, -- KEY: blocks diagnostics
+                        ["gopls/log"] = silent_handler,
                     },
                     settings = {
                         gopls = {
                             verboseOutput = false,
-                            analyses = { unusedparams = true, shadow = true },
-                            staticcheck = true,
+                            analyses = { unusedparams = false, shadow = false }, -- Disable to reduce noise
+                            staticcheck = false,                                 -- Disable to reduce noise
                             completeUnimported = true,
                             usePlaceholders = true,
-                            codelenses = { generate = true, refrences = true },
+                            codelenses = { generate = false, refrences = false }, -- Disable codelenses
                             hints = {
-                                assignVariableTypes    = true,
-                                compositeLiteralFields = true,
-                                compositeLiteralTypes  = true,
-                                constantValues         = true,
-                                functionTypeParameters = true,
-                                parameterNames         = true,
-                                rangeVariableTypes     = true,
+                                assignVariableTypes    = false,
+                                compositeLiteralFields = false,
+                                compositeLiteralTypes  = false,
+                                constantValues         = false,
+                                functionTypeParameters = false,
+                                parameterNames         = false,
+                                rangeVariableTypes     = false,
                             },
                         },
                     },
@@ -207,6 +224,12 @@ return {
                 },
 
                 rust_analyzer = {
+                    handlers = {
+                        ["window/showMessage"] = silent_handler,
+                        ["window/logMessage"] = silent_handler,
+                        ["textDocument/publishDiagnostics"] = silent_handler,
+                        ["$/progress"] = silent_handler,
+                    },
                     capabilities = capabilities,
                     settings = {
                         ["rust-analyzer"] = {
@@ -217,7 +240,7 @@ return {
                                 closureReturnTypeHints = { enable = "never" },
                                 lifetimeElisionHints = { enable = "never" },
                                 maxLength = 25,
-                                parameterHints = { enable = false }, -- Use signature help instead
+                                parameterHints = { enable = false },
                                 reborrowHints = { enable = "never" },
                                 renderColons = true,
                                 typeHints = { enable = false },
@@ -227,6 +250,12 @@ return {
                 },
 
                 pyright       = {
+                    handlers = {
+                        ["window/showMessage"] = silent_handler,
+                        ["window/logMessage"] = silent_handler,
+                        ["textDocument/publishDiagnostics"] = silent_handler,
+                        ["$/progress"] = silent_handler,
+                    },
                     capabilities = capabilities,
                     settings = {
                         python = {
@@ -234,8 +263,8 @@ return {
                                 inlayHints = {
                                     variableTypes = false,
                                     functionReturnTypes = false,
-                                    parameterNames = true, -- Disable to avoid duplicates with signature help
-                                    parameterTypes = true,
+                                    parameterNames = false,
+                                    parameterTypes = false,
                                 },
                             },
                         },
@@ -243,6 +272,12 @@ return {
                 },
 
                 clangd        = {
+                    handlers = {
+                        ["window/showMessage"] = silent_handler,
+                        ["window/logMessage"] = silent_handler,
+                        ["textDocument/publishDiagnostics"] = silent_handler,
+                        ["$/progress"] = silent_handler,
+                    },
                     capabilities = capabilities,
                     cmd = {
                         "clangd",
@@ -253,23 +288,28 @@ return {
                         "--function-arg-placeholders",
                         "--fallback-style=llvm",
                         "--enable-config",
+                        "--log=error", -- Minimal logging
                     },
                     init_options = {
                         usePlaceholders = true,
                         completeUnimported = true,
-                        clangdFileStatus = true,
+                        clangdFileStatus = false, -- Disable status messages
                     },
                 },
 
                 lua_ls        = {
+                    handlers = {
+                        ["window/showMessage"] = silent_handler,
+                        ["window/logMessage"] = silent_handler,
+                        ["textDocument/publishDiagnostics"] = silent_handler,
+                        ["$/progress"] = silent_handler,
+                    },
                     capabilities = capabilities,
                     settings = {
                         Lua = {
                             workspace = { checkThirdParty = false },
                             completion = { callSnippet = "Replace" },
-                            hint = {
-                                enable = false, -- Use signature help instead for consistency
-                            },
+                            hint = { enable = false },
                         },
                     },
                 },
@@ -284,7 +324,15 @@ return {
             require("mason-lspconfig").setup({
                 handlers = {
                     function(server_name)
-                        local server = servers[server_name] or { capabilities = capabilities }
+                        local server = servers[server_name] or {
+                            capabilities = capabilities,
+                            handlers = {
+                                ["window/showMessage"] = silent_handler,
+                                ["window/logMessage"] = silent_handler,
+                                ["textDocument/publishDiagnostics"] = silent_handler,
+                                ["$/progress"] = silent_handler,
+                            }
+                        }
                         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
                         require("lspconfig")[server_name].setup(server)
                     end,
