@@ -14,20 +14,31 @@ return {
         end
       end
 
+      -- Gruber Darker palette
+      local bg       = '#181818'
+      local fg       = '#e4e4ef'
+      local niagara  = '#96a6c8' -- blue
+      local wisteria = '#9e95c7' -- magenta
+      local quartz   = '#95a99f' -- cyan-ish
+      local yellow   = '#ffdd33'
+      local red      = '#f43841'
+      local green    = '#73c936'
+      local black    = '#000000'
+
       require('lualine').setup {
-        options = {
-          icons_enabled = true,
-          theme = 'tokyonight',
+        options           = {
+          icons_enabled        = true,
+          theme                = 'auto',
           component_separators = { left = '', right = '' },
-          section_separators = { left = '', right = '' },
-          globalstatus = true,
+          section_separators   = { left = '', right = '' },
+          globalstatus         = true,
           always_divide_middle = true,
         },
-        sections = {
+        sections          = {
           lualine_a = {
             {
               'mode',
-              color = { fg = '#7dcfff', bg = '#1a1b26', gui = 'bold' }, -- more vibrant blue
+              color = { fg = niagara, bg = bg, gui = 'bold' },
               separator = { left = '', right = '' },
             }
           },
@@ -35,16 +46,21 @@ return {
             {
               'branch',
               icon = '',
-              color = { fg = '#bb9af7', gui = 'bold' },
+              color = { fg = wisteria, gui = 'bold' },
             },
             {
               'diff',
               symbols = { added = ' ', modified = ' ', removed = ' ' },
-              color = { fg = '#e0af68' },
+              -- use gruber accents: + green, ~ yellow, - red
+              diff_color = {
+                added    = { fg = green },
+                modified = { fg = yellow },
+                removed  = { fg = red },
+              },
             },
             {
               macro_recording,
-              color = { fg = '#ff007c', bg = '#1a1b26', gui = 'bold,italic' }, -- hot pink for macro
+              color = { fg = wisteria, bg = bg, gui = 'bold,italic' },
             }
           },
           lualine_c = {
@@ -52,38 +68,43 @@ return {
               'diagnostics',
               sources = { 'nvim_lsp' },
               symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
-              color = { fg = '#e0af68' },
+              diagnostics_color = {
+                error = { fg = red },
+                warn  = { fg = yellow },
+                info  = { fg = niagara },
+                hint  = { fg = quartz },
+              },
             },
             {
               'filename',
               path = 1,
-              color = { fg = '#c0caf5', gui = 'bold' },
+              color = { fg = fg, gui = 'bold' },
             }
           },
           lualine_x = {
             {
               'fileformat',
               icons_enabled = true,
-              color = { fg = '#7dcfff' },
+              color = { fg = quartz },
             },
             {
               'filetype',
               icon_only = true,
-              color = { fg = '#ff9e64' },
+              color = { fg = yellow },
             }
           },
           lualine_y = {
             {
               'progress',
               icon = '',
-              color = { fg = '#f7768e', gui = 'bold' },
+              color = { fg = red, gui = 'bold' },
             }
           },
           lualine_z = {
             {
               'location',
               icon = '',
-              color = { fg = '#1a1b26', gui = 'bold', bg = '#7aa2f7' },
+              color = { fg = bg, gui = 'bold', bg = niagara },
               separator = { left = '', right = '' },
             }
           }
@@ -91,15 +112,16 @@ return {
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = { { 'filename', separator = { left = '', right = '' } } },
-          lualine_x = { { 'location', separator = { left = '', right = '' } } },
+          lualine_c = { { 'filename', color = { fg = quartz }, separator = { left = '', right = '' } } },
+          lualine_x = { { 'location', color = { fg = niagara }, separator = { left = '', right = '' } } },
           lualine_y = {},
           lualine_z = {}
         },
-        tabline = {},
-        winbar = {},
-        extensions = { 'nvim-tree', 'toggleterm', 'quickfix' }
+        tabline           = {},
+        winbar            = {},
+        extensions        = { 'nvim-tree', 'toggleterm', 'quickfix' }
       }
+
       -- Fix signcolumn so line numbers never move
       vim.opt.signcolumn = "yes:2"
     end

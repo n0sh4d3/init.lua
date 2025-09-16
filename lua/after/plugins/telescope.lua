@@ -48,7 +48,7 @@ return {
 
           border               = false,
           borderchars          = { "", "", "", "", "", "", "", "" },
-          results_title        = false,
+          results_title        = true,
 
           -- COMPACT + ALWAYS PREVIEW
           sorting_strategy     = "ascending",
@@ -94,9 +94,9 @@ return {
         -- preview ON by default for primary pickers
         pickers = {
           find_files                = {
-            prompt_title = false,
-            results_title = false,
-            preview_title = false,
+            prompt_title = true,
+            results_title = true,
+            preview_title = true,
             previewer = true,
             find_command = vim.fn.executable("fd") == 1 and {
               "fd", "--type", "f", "--hidden", "--follow", "--exclude", ".git",

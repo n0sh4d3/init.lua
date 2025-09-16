@@ -5,9 +5,9 @@ vim.g.have_nerd_font = true
 vim.opt.guicursor = "n-v-c:block"
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4     -- 8
+vim.opt.softtabstop = 4 -- 8
+vim.opt.shiftwidth = 4  -- 8
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
@@ -58,10 +58,10 @@ vim.api.nvim_create_autocmd("FileType", {
 
 		-- Apply telescope-like colors to netrw
 		vim.api.nvim_set_hl(0, "netrwDir", { fg = "#7aa2f7", bold = true }) -- directories (blue)
-		vim.api.nvim_set_hl(0, "netrwPlain", { fg = normal.fg })        -- regular files
+		vim.api.nvim_set_hl(0, "netrwPlain", { fg = normal.fg }) -- regular files
 		vim.api.nvim_set_hl(0, "netrwExe", { fg = "#9ece6a", bold = true }) -- executables (green)
-		vim.api.nvim_set_hl(0, "netrwSymLink", { fg = "#e0af68" })      -- symlinks (yellow)
-		vim.api.nvim_set_hl(0, "netrwTreeBar", { fg = "#414868" })      -- tree bars
+		vim.api.nvim_set_hl(0, "netrwSymLink", { fg = "#e0af68" }) -- symlinks (yellow)
+		vim.api.nvim_set_hl(0, "netrwTreeBar", { fg = "#414868" }) -- tree bars
 
 		-- Make netrw transparent (use normal background, not floating)
 		vim.api.nvim_win_set_option(0, "winhighlight", "Normal:Normal")

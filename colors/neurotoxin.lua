@@ -1,30 +1,33 @@
--- neurotoxin-base16 (tokyonight-storm vibes, neutral-ish whites)
 local M = {}
 
--- Base16 slots
--- 00-07: core (bg..fg), 08-0F: accents
-local base16 = {
-  base00 = "#24283b", -- bg (storm base)
-  base01 = "#1f2335", -- darker bg
-  base02 = "#2f3549", -- selection/cursorline
-  base03 = "#545c7e", -- comments/dim
-  base04 = "#b7bdd6", -- subtle fg (less blue than stock)
-  base05 = "#d7d8e4", -- main fg (neutralized “white”)
-  base06 = "#e6e6ef", -- bright fg
-  base07 = "#f2f2f5", -- near-white
+-- Gruber Darker color palette (exact match)
+local colors = {
+  -- Background colors
+  bg = "#181818",       -- main background
+  bg_dark = "#101010",  -- darker background
+  bg_light = "#282828", -- lighter background (selection, etc)
 
-  base08 = "#f7768e", -- red
-  base09 = "#ff9e64", -- orange
-  base0A = "#e0af68", -- yellow
-  base0B = "#9ece6a", -- green
-  base0C = "#73daca", -- cyan/teal
-  base0D = "#7aa2f7", -- blue
-  base0E = "#bb9af7", -- purple
-  base0F = "#c68a75", -- brown/aux
+  -- Foreground colors
+  fg = "#e4e4ef",       -- main foreground
+  fg_light = "#f4f4ff", -- lighter foreground
+  fg_dim = "#52494e",   -- dimmed text
+
+  -- Core colors (original Gruber Darker)
+  red = "#f43841",    -- red
+  orange = "#c73c3f", -- orange/brown
+  yellow = "#ffdd33", -- original yellow (will be replaced for keywords only)
+  green = "#73c936",  -- green
+  blue = "#96a6c8",   -- blue/purple
+  purple = "#9e95c7", -- purple
+
+  -- Tokyo Night signature blue (replacement for yellow keywords)
+  tokyo_blue = "#7aa2f7",
+
+  -- Neutral colors
+  white = "#ffffff",
+  gray = "#cc8c3c",
+  dark_gray = "#484848",
 }
-
--- convenience aliases
-local c = base16
 
 vim.cmd("highlight clear")
 if vim.fn.exists("syntax_on") == 1 then
@@ -33,90 +36,144 @@ end
 
 vim.o.termguicolors = true
 vim.o.background = "dark"
-vim.g.colors_name = "neurotoxin-base16"
+vim.g.colors_name = "gruber-darker-tokyo"
 
 local function hi(group, opts) vim.api.nvim_set_hl(0, group, opts) end
 
--- Core
-hi("Normal", { fg = c.base05, bg = c.base00 })
-hi("Comment", { fg = c.base03, italic = true })
-hi("Constant", { fg = c.base0A }) -- lean warmer than stock tokyo
-hi("String", { fg = c.base0B })
-hi("Character", { fg = c.base0B })
-hi("Identifier", { fg = c.base05 })
-hi("Statement", { fg = c.base0D })
-hi("PreProc", { fg = c.base0E })
-hi("Type", { fg = c.base0E })
-hi("Special", { fg = c.base0D })
-hi("Underlined", { fg = c.base0D, underline = true })
-hi("Error", { fg = c.base08 })
-hi("Todo", { fg = c.base00, bg = c.base09 })
+-- Core syntax highlighting (keywords get Tokyo blue, everything else stays gruber)
+hi("Normal", { fg = colors.fg, bg = colors.bg })
+hi("Comment", { fg = colors.fg_dim, italic = true })
+hi("Constant", { fg = colors.blue })
+hi("String", { fg = colors.green })
+hi("Character", { fg = colors.green })
+hi("Number", { fg = colors.purple })
+hi("Boolean", { fg = colors.purple })
+hi("Float", { fg = colors.purple })
+hi("Identifier", { fg = colors.fg })
+hi("Function", { fg = colors.blue })
 
--- UI
-hi("StatusLine", { fg = c.base05, bg = c.base02 })
-hi("StatusLineNC", { fg = c.base03, bg = c.base02 })
-hi("VertSplit", { fg = c.base02, bg = c.base00 })
-hi("TabLine", { fg = c.base03, bg = c.base02 })
-hi("TabLineFill", { fg = c.base05, bg = c.base00 })
-hi("TabLineSel", { fg = c.base05, bg = c.base00 })
-hi("Title", { fg = c.base0D })
-hi("LineNr", { fg = c.base03 })
-hi("CursorLineNr", { fg = c.base05 })
-hi("CursorLine", { bg = c.base02 })
-hi("ColorColumn", { bg = c.base02 })
-hi("SignColumn", { bg = c.base00 })
-hi("Visual", { bg = c.base02 })
-hi("VisualNOS", { bg = c.base02 })
-hi("Pmenu", { fg = c.base05, bg = c.base02 })
-hi("PmenuSel", { fg = c.base07, bg = c.base0D })
-hi("PmenuSbar", { bg = c.base02 })
-hi("PmenuThumb", { bg = c.base03 })
-hi("WildMenu", { fg = c.base07, bg = c.base0D })
-hi("Folded", { fg = c.base03, bg = c.base02, italic = true })
-hi("FoldColumn", { fg = c.base03, bg = c.base00 })
-hi("SpecialKey", { fg = c.base0D })
-hi("NonText", { fg = c.base03 })
-hi("MatchParen", { fg = c.base07, bg = c.base03 })
-hi("Conceal", { fg = c.base03 })
-hi("Directory", { fg = c.base0D })
-hi("Search", { fg = c.base00, bg = c.base0A })
-hi("IncSearch", { fg = c.base00, bg = c.base0D })
+-- KEYWORDS get Tokyo Night blue instead of yellow
+hi("Statement", { fg = colors.tokyo_blue, bold = true })
+hi("Conditional", { fg = colors.tokyo_blue, bold = true })
+hi("Repeat", { fg = colors.tokyo_blue, bold = true })
+hi("Label", { fg = colors.tokyo_blue, bold = true })
+hi("Operator", { fg = colors.tokyo_blue })
+hi("Keyword", { fg = colors.tokyo_blue, bold = true })
+hi("Exception", { fg = colors.tokyo_blue, bold = true })
 
--- Diagnostics (LSP)
-hi("DiagnosticError", { fg = c.base08 })
-hi("DiagnosticWarn", { fg = c.base09 })
-hi("DiagnosticInfo", { fg = c.base0D })
-hi("DiagnosticHint", { fg = c.base0C })
-hi("DiagnosticUnderlineError", { sp = c.base08, undercurl = true })
-hi("DiagnosticUnderlineWarn", { sp = c.base09, undercurl = true })
-hi("DiagnosticUnderlineInfo", { sp = c.base0D, undercurl = true })
-hi("DiagnosticUnderlineHint", { sp = c.base0C, undercurl = true })
+hi("PreProc", { fg = colors.blue })
+hi("Include", { fg = colors.blue })
+hi("Define", { fg = colors.blue })
+hi("Macro", { fg = colors.blue })
+hi("PreCondit", { fg = colors.blue })
+hi("Type", { fg = colors.blue })
+hi("StorageClass", { fg = colors.blue })
+hi("Structure", { fg = colors.blue })
+hi("Typedef", { fg = colors.blue })
+hi("Special", { fg = colors.red })
+hi("SpecialChar", { fg = colors.red })
+hi("Tag", { fg = colors.red })
+hi("Delimiter", { fg = colors.fg })
+hi("SpecialComment", { fg = colors.fg_dim })
+hi("Debug", { fg = colors.red })
+hi("Underlined", { fg = colors.blue, underline = true })
+hi("Error", { fg = colors.red })
+hi("Todo", { fg = colors.yellow, bg = colors.bg_dark, bold = true })
 
--- Treesitter
+-- UI Elements (exact Gruber Darker style)
+hi("Cursor", { fg = colors.bg, bg = colors.fg })
+hi("CursorLine", { bg = colors.bg_light })
+hi("CursorColumn", { bg = colors.bg_light })
+hi("ColorColumn", { bg = colors.bg_light })
+hi("LineNr", { fg = colors.dark_gray })
+hi("CursorLineNr", { fg = colors.fg, bold = true })
+hi("VertSplit", { fg = colors.dark_gray, bg = colors.bg })
+hi("MatchParen", { fg = colors.white, bg = colors.dark_gray, bold = true })
+hi("StatusLine", { fg = colors.fg, bg = colors.bg_light })
+hi("StatusLineNC", { fg = colors.fg_dim, bg = colors.bg_light })
+hi("Pmenu", { fg = colors.fg, bg = colors.bg_light })
+hi("PmenuSel", { fg = colors.bg, bg = colors.blue })
+hi("PmenuSbar", { bg = colors.dark_gray })
+hi("PmenuThumb", { bg = colors.fg_dim })
+hi("TabLine", { fg = colors.fg_dim, bg = colors.bg_light })
+hi("TabLineSel", { fg = colors.fg, bg = colors.bg, bold = true })
+hi("TabLineFill", { fg = colors.fg_dim, bg = colors.bg_light })
+hi("Title", { fg = colors.blue, bold = true })
+hi("Visual", { bg = colors.bg_light })
+hi("Search", { fg = colors.bg, bg = colors.yellow })
+hi("IncSearch", { fg = colors.bg, bg = colors.orange })
+hi("WildMenu", { fg = colors.bg, bg = colors.blue })
+hi("Folded", { fg = colors.fg_dim, bg = colors.bg_light })
+hi("FoldColumn", { fg = colors.fg_dim, bg = colors.bg })
+hi("SignColumn", { fg = colors.fg_dim, bg = colors.bg })
+hi("Directory", { fg = colors.blue })
+hi("SpecialKey", { fg = colors.fg_dim })
+hi("NonText", { fg = colors.fg_dim })
+hi("ModeMsg", { fg = colors.green })
+hi("MoreMsg", { fg = colors.green })
+hi("Question", { fg = colors.green })
+hi("WarningMsg", { fg = colors.orange })
+hi("ErrorMsg", { fg = colors.red })
+
+-- Treesitter (keywords get Tokyo blue, rest stays gruber)
 hi("@comment", { link = "Comment" })
-hi("@constant", { fg = c.base0A })
-hi("@constant.builtin", { fg = c.base0A })
-hi("@string", { link = "String" })
-hi("@variable", { fg = c.base05 })
-hi("@function", { fg = c.base05 })
-hi("@function.builtin", { fg = c.base0E })
-hi("@function.macro", { fg = c.base0E })
-hi("@keyword", { fg = c.base0D })
-hi("@keyword.function", { fg = c.base0D })
-hi("@keyword.operator", { fg = c.base0D })
-hi("@keyword.return", { fg = c.base0D })
-hi("@type", { fg = c.base0E })
-hi("@type.builtin", { fg = c.base0E })
-hi("@operator", { fg = c.base0D })
-hi("@number", { fg = c.base09 }) -- numbers pop a tad warmer
-hi("@boolean", { fg = c.base09 })
-hi("@property", { fg = c.base05 })
-hi("@punctuation.delimiter", { fg = c.base0D })
-hi("@punctuation.bracket", { fg = c.base0D })
-hi("@tag", { fg = c.base0D })
-hi("@tag.attribute", { fg = c.base05 })
-hi("@text", { fg = c.base05 })
+hi("@constant", { fg = colors.blue })
+hi("@constant.builtin", { fg = colors.purple })
+hi("@string", { fg = colors.green })
+hi("@string.escape", { fg = colors.red })
+hi("@character", { fg = colors.green })
+hi("@number", { fg = colors.purple })
+hi("@boolean", { fg = colors.purple })
+hi("@float", { fg = colors.purple })
+hi("@function", { fg = colors.blue })
+hi("@function.builtin", { fg = colors.blue })
+hi("@function.macro", { fg = colors.blue })
+hi("@parameter", { fg = colors.fg })
+hi("@method", { fg = colors.blue })
+hi("@field", { fg = colors.fg })
+hi("@property", { fg = colors.fg })
+hi("@constructor", { fg = colors.blue })
+hi("@conditional", { fg = colors.tokyo_blue, bold = true })
+hi("@repeat", { fg = colors.tokyo_blue, bold = true })
+hi("@label", { fg = colors.tokyo_blue })
+hi("@operator", { fg = colors.tokyo_blue })
+hi("@keyword", { fg = colors.tokyo_blue, bold = true })
+hi("@exception", { fg = colors.tokyo_blue, bold = true })
+hi("@keyword.function", { fg = colors.tokyo_blue, bold = true })
+hi("@keyword.operator", { fg = colors.tokyo_blue })
+hi("@keyword.return", { fg = colors.tokyo_blue, bold = true })
+hi("@type", { fg = colors.blue })
+hi("@type.builtin", { fg = colors.blue })
+hi("@include", { fg = colors.blue })
+hi("@variable", { fg = colors.fg })
+hi("@variable.builtin", { fg = colors.blue })
+hi("@text", { fg = colors.fg })
+hi("@text.strong", { bold = true })
+hi("@text.emphasis", { italic = true })
+hi("@text.underline", { underline = true })
+hi("@text.title", { fg = colors.blue, bold = true })
+hi("@text.uri", { fg = colors.blue, underline = true })
+hi("@tag", { fg = colors.red })
+hi("@tag.attribute", { fg = colors.blue })
+hi("@punctuation", { fg = colors.fg })
+hi("@punctuation.bracket", { fg = colors.fg })
+hi("@punctuation.delimiter", { fg = colors.fg })
 
--- Optional: export palette if you want to reuse it
-M.palette = base16
+-- LSP Diagnostics
+hi("DiagnosticError", { fg = colors.red })
+hi("DiagnosticWarn", { fg = colors.orange })
+hi("DiagnosticInfo", { fg = colors.blue })
+hi("DiagnosticHint", { fg = colors.green })
+hi("DiagnosticUnderlineError", { sp = colors.red, undercurl = true })
+hi("DiagnosticUnderlineWarn", { sp = colors.orange, undercurl = true })
+hi("DiagnosticUnderlineInfo", { sp = colors.blue, undercurl = true })
+hi("DiagnosticUnderlineHint", { sp = colors.green, undercurl = true })
+
+-- Git signs
+hi("GitSignsAdd", { fg = colors.green })
+hi("GitSignsChange", { fg = colors.blue })
+hi("GitSignsDelete", { fg = colors.red })
+
+-- Export palette
+M.palette = colors
 return M

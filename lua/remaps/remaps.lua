@@ -11,6 +11,7 @@ vim.api.nvim_set_keymap('t', '<A-h>', [[<C-\><C-n>:q!<CR>]], { noremap = true })
 
 -- split buff
 vim.keymap.set("n", "<leader>j", "<C-w><C-v><C-w><C-l>")
+vim.keymap.set("n", "<leader>'", ":Sex!<CR><C-w>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -31,9 +32,9 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 
 vim.keymap.set(
-    "n",
-    "<leader>e",
-    "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
+	"n",
+	"<leader>e",
+	"oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
 )
 
 vim.keymap.set("t", "<C-c", "<Esc><Esc>")

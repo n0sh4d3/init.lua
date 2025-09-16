@@ -355,9 +355,9 @@ return {
                         "--header-insertion=iwyu",
                         "--completion-style=detailed",
                         "--function-arg-placeholders",
-                        "--fallback-style=llvm",
+                        "--fallback-style={ BasedOnStyle: LLVM, IndentWidth: 8, TabWidth: 8, UseTab: Never }",
                         "--enable-config",
-                        "--log=error", -- Minimal logging
+                        "--log=error",
                     },
                     init_options = {
                         usePlaceholders = true,

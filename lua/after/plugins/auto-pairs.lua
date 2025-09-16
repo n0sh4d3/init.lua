@@ -1,5 +1,6 @@
 return {
-    "jiangmiao/auto-pairs",
+    { "windwp/nvim-autopairs", event = "InsertEnter", config = true }
+
     -- {
     --     "S1M0N38/love2d.nvim",
     --     cmd = "LoveRun",
